@@ -1,0 +1,110 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "e09d6f898dad912669bb54acad7c0d12",
+    "packages": [
+        {
+            "name": "glushkovds/simplex-admin",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/glushkovds/simplex-admin.git",
+                "reference": "8340d3aff5a3cd14c46b1f9d983b253769a2bf7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/8340d3aff5a3cd14c46b1f9d983b253769a2bf7b",
+                "reference": "8340d3aff5a3cd14c46b1f9d983b253769a2bf7b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "glushkovds/simplex-core": "*",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Simplex\\Admin\\": "src/Admin"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Glushkov",
+                    "email": "amkarovec@gmail.com",
+                    "homepage": "https://github.com/glushkovds"
+                }
+            ],
+            "description": "Admin panel for simplex-cms",
+            "homepage": "https://github.com/glushkovds/simplex-admin",
+            "keywords": [
+                "php",
+                "simplex-admin",
+                "simplex-cms"
+            ],
+            "time": "2020-10-18T16:05:19+00:00"
+        },
+        {
+            "name": "glushkovds/simplex-core",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/glushkovds/simplex-core.git",
+                "reference": "10740fb56b9707814c2219b76216545654ae3fa4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/10740fb56b9707814c2219b76216545654ae3fa4",
+                "reference": "10740fb56b9707814c2219b76216545654ae3fa4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Simplex\\Core\\": "src/Core"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Glushkov",
+                    "email": "amkarovec@gmail.com",
+                    "homepage": "https://github.com/glushkovds"
+                }
+            ],
+            "description": "Core for simplex-cms",
+            "homepage": "https://github.com/glushkovds/simplex-core",
+            "keywords": [
+                "php",
+                "simplex-cms",
+                "simplex-core"
+            ],
+            "time": "2020-10-18T14:38:47+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1.0",
+        "ext-gd": "*"
+    },
+    "platform-dev": []
+}

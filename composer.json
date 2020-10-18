@@ -1,0 +1,37 @@
+{
+  "name": "glushkovds/simplex-cms",
+  "description": "Simplex CMS",
+  "keywords": [
+    "php",
+    "simplex-admin",
+    "simplex-cms"
+  ],
+  "homepage": "https://github.com/glushkovds/simplex-cms",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Denis Glushkov",
+      "email": "amkarovec@gmail.com",
+      "homepage": "https://github.com/glushkovds"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "ext-gd": "*",
+    "glushkovds/simplex-core": "*",
+    "glushkovds/simplex-admin": "*"
+  },
+  "require-dev": {
+  },
+  "suggest": {
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
+

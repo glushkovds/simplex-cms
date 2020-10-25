@@ -6,6 +6,7 @@ Init::loadConstants();
 define('SF_LOCATION', SF_LOCATION_SITE);
 
 Init::_();
+\Simplex\Core\Container::set('page', new \Simplex\Core\Page());
 
 ob_start();
 \Simplex\Core\Core::execute();
@@ -27,7 +28,8 @@ if (!empty($matches[1])) {
 
 echo sanitizeOutput($html);
 
-function imDev() {
+function imDev()
+{
     if (isset($_GET['setimdev'])) {
         setcookie('imdev', 1, time() + 60 * 60 * 24 * 30, '/');
         header("location: ./");
@@ -39,10 +41,11 @@ function imDev() {
     return $ret;
 }
 
-function barf($f, $l, $debug = false, $printTrace = false) {
+function barf($f, $l, $debug = false, $printTrace = false)
+{
     if (imDev()) {
-        $d = & $_ENV['debug_barf'];
-        $s = & $_ENV['debug_start'];
+        $d = &$_ENV['debug_barf'];
+        $s = &$_ENV['debug_start'];
         empty($d) && $d = [];
         $di = [];
         $di['line'] = $l;
@@ -61,7 +64,8 @@ function barf($f, $l, $debug = false, $printTrace = false) {
     }
 }
 
-function barfOut() {
+function barfOut()
+{
     if (imDev()) {
         echo '<table cellpadding=3 border=1>';
         foreach ($_ENV['debug_barf'] as $row) {
@@ -79,7 +83,8 @@ function barfOut() {
     }
 }
 
-function sanitizeOutput($buffer) {
+function sanitizeOutput($buffer)
+{
     if (imDev()) {
         return $buffer;
     }

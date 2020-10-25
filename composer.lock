@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-admin.git",
-                "reference": "8340d3aff5a3cd14c46b1f9d983b253769a2bf7b"
+                "reference": "45a07df7bd07b8e8066af30992a8687155243192"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/8340d3aff5a3cd14c46b1f9d983b253769a2bf7b",
-                "reference": "8340d3aff5a3cd14c46b1f9d983b253769a2bf7b",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/45a07df7bd07b8e8066af30992a8687155243192",
+                "reference": "45a07df7bd07b8e8066af30992a8687155243192",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "simplex-admin",
                 "simplex-cms"
             ],
-            "time": "2020-10-18T16:05:19+00:00"
+            "time": "2020-10-25T14:59:18+00:00"
         },
         {
             "name": "glushkovds/simplex-core",
@@ -57,12 +57,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "10740fb56b9707814c2219b76216545654ae3fa4"
+                "reference": "ec5a64884f10bf25b9239892442448e831d2d591"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/10740fb56b9707814c2219b76216545654ae3fa4",
-                "reference": "10740fb56b9707814c2219b76216545654ae3fa4",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/ec5a64884f10bf25b9239892442448e831d2d591",
+                "reference": "ec5a64884f10bf25b9239892442448e831d2d591",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 "simplex-cms",
                 "simplex-core"
             ],
-            "time": "2020-10-18T14:38:47+00:00"
+            "time": "2020-10-25T14:56:26+00:00"
         }
     ],
     "packages-dev": [],

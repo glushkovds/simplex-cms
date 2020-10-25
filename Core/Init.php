@@ -15,6 +15,9 @@ class Init
         static::startSession();
         static::setCharset();
 
+        require_once SF_ROOT_PATH . '/config.php';
+        \Simplex\Core\Container::set('config', new Config());
+
         // TODO Lazy connect
         \Simplex\Core\DB::connect();
 
@@ -22,12 +25,12 @@ class Init
         \Simplex\Core\Core::init();
         \Simplex\Core\Page::init();
 
-        return new Simplex\Core;
+        return \Simplex\Core\Core::class;
     }
 
     public static function loadConstants()
     {
-        require_once '../constants.php';
+        require_once __DIR__ . '/../constants.php';
     }
 
     protected static function setTimezone()

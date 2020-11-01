@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.40, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: simplex
+-- Host: 127.0.0.1    Database: simplex3
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -128,7 +128,7 @@ CREATE TABLE `component` (
 
 LOCK TABLES `component` WRITE;
 /*!40000 ALTER TABLE `component` DISABLE KEYS */;
-INSERT INTO `component` VALUES (1,'ComContent','Материалы','a:2:{s:6:\"аег\";s:1:\"q\";s:6:\"groupp\";a:1:{s:4:\"jopa\";s:1:\"2\";}}');
+INSERT INTO `component` VALUES (1,'Content','Материалы','a:2:{s:6:\"аег\";s:1:\"q\";s:6:\"groupp\";a:1:{s:4:\"jopa\";s:1:\"2\";}}');
 /*!40000 ALTER TABLE `component` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +273,7 @@ CREATE TABLE `log` (
   `browser` varchar(255) NOT NULL,
   `data` varchar(1000) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +282,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
-INSERT INTO `log` VALUES (1,'2017-10-04 06:31:28','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:50.0) Gecko/20100101 Firefox/50.0','Логин: dev'),(2,'2020-04-19 15:17:32','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0','Логин: dev');
+INSERT INTO `log` VALUES (1,'2017-10-04 06:31:28','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:50.0) Gecko/20100101 Firefox/50.0','Логин: dev'),(2,'2020-04-19 15:17:32','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0','Логин: dev'),(3,'2020-10-25 09:43:55','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(4,'2020-10-25 10:05:59','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(5,'2020-10-25 10:07:28','login_attempt','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(6,'2020-10-25 10:07:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(7,'2020-10-25 14:45:53','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(8,'2020-11-01 09:27:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev');
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,7 +374,7 @@ CREATE TABLE `module` (
 
 LOCK TABLES `module` WRITE;
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
-INSERT INTO `module` VALUES (1,'ModMenu','Меню','site',0),(2,'ModContent','Список материалов','site',0),(3,'ModBreadcrumbs','Хлебные крошки','site',1),(4,'ModBlock','Текстовый блок','site',0),(7,'AdminModBreadCrumbs','Admin. Хлебные крошки','admin',0),(8,'AdminModMenu','Admin. Меню','admin',0),(9,'ModSlider','Слайдер','site',0),(10,'ModCallback','Обратный звонок','site',0),(11,'AdminModAccount','Admin. Аккаунт','admin',0),(12,'AdminModInstall','Admin. Репозиторий','admin',0),(13,'ModCode','Код','site',0);
+INSERT INTO `module` VALUES (1,'\\App\\Extensions\\Menu\\Menu','Меню','site',0),(2,'ModContent','Список материалов','site',0),(3,'\\App\\Extensions\\Breadcrumbs\\Breadcrumbs','Хлебные крошки','site',1),(4,'\\App\\Extensions\\Block\\Block','Текстовый блок','site',0),(7,'Breadcrumbs','Admin. Хлебные крошки','admin',0),(8,'Menu','Admin. Меню','admin',0),(9,'ModSlider','Слайдер','site',0),(10,'ModCallback','Обратный звонок','site',0),(11,'Account','Admin. Аккаунт','admin',0),(12,'Install','Admin. Репозиторий','admin',0),(13,'ModCode','Код','site',0);
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -617,7 +617,7 @@ CREATE TABLE `struct_field` (
 
 LOCK TABLES `struct_field` WRITE;
 /*!40000 ALTER TABLE `struct_field` DISABLE KEYS */;
-INSERT INTO `struct_field` VALUES (1,'Строка','SFFString'),(2,'Целое число','SFFInt'),(3,'Булевая переменная','SFFBool'),(4,'Алиас','SFFAlias'),(5,'Url-путь','SFFPath'),(6,'Пароль','SFFPassword'),(7,'Дата','SFFDate'),(8,'Дата и время','SFFDateTime'),(9,'Текст','SFFText'),(10,'Файл','SFFFile'),(11,'Изображение','SFFImage'),(14,'Варианты','SFFEnum'),(15,'№ п/п','SFFNPP'),(16,'Виртуальное поле','SFFVirtual'),(17,'Время','SFFTime'),(18,'Дробное число','SFFDouble'),(19,'Связь многие ко многим','SFFMultiKey'),(20,'Пароль видимый','SFFPasswordVisible');
+INSERT INTO `struct_field` VALUES (1,'Строка','FieldString'),(2,'Целое число','FieldInt'),(3,'Булевая переменная','FieldBool'),(4,'Алиас','FieldAlias'),(5,'Url-путь','FieldPath'),(6,'Пароль','FieldPassword'),(7,'Дата','FieldDate'),(8,'Дата и время','FieldDateTime'),(9,'Текст','FieldText'),(10,'Файл','FieldFile'),(11,'Изображение','FieldImage'),(14,'Варианты','FieldEnum'),(15,'№ п/п','FieldNPP'),(16,'Виртуальное поле','FieldVirtual'),(17,'Время','FieldTime'),(18,'Дробное число','FieldDouble'),(19,'Связь многие ко многим','FieldMultiKey'),(20,'Пароль видимый','FieldPasswordVisible');
 /*!40000 ALTER TABLE `struct_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -778,7 +778,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,1,1,'dev','b8700830eb7bdd7a4823df4827f97c28','fb1a392b083e3121edd7c9046be62baa','f2bc9b3d9197243d096ceac3417118c2','','',NULL),(2,2,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','e1c3403a66d1269c4e3edbae11c11f03','',NULL,'',NULL);
+INSERT INTO `user` VALUES (1,1,1,'dev','b8700830eb7bdd7a4823df4827f97c28','fb1a392b083e3121edd7c9046be62baa','f951a126dd095597e4f112dbf0c2ddc7','','',NULL),(2,2,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','e1c3403a66d1269c4e3edbae11c11f03','',NULL,'',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -937,4 +937,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-23 18:27:58
+-- Dump completed on 2020-11-01 17:19:29

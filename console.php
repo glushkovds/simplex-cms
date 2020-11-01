@@ -8,14 +8,7 @@
  *             with method actionTestme($key, $value) this way: (new ConsoleTest())->actionTestme(1,2); // not 2,1
  */
 ini_set('display_errors', 1);
-define('SF_INADMIN', false);
-define('SF_INSITE', false);
-define('SF_INCRON', true);
-define('SF_INAPI', false);
-
 ini_set('max_execution_time', 600);
-ini_set('iconv.internal_encoding', 'UTF-8');
-ini_set('mbstring.internal_encoding', 'UTF-8');
 
 if (!isset($_SERVER['REQUEST_URI'])) {
     $_SERVER['REQUEST_URI'] = '/';
@@ -30,33 +23,26 @@ if (empty($_SERVER['DOCUMENT_ROOT'])) {
     $_SERVER['DOCUMENT_ROOT'] = __DIR__;
 }
 
-include "{$_SERVER['DOCUMENT_ROOT']}/autoload.php";
-include "{$_SERVER['DOCUMENT_ROOT']}/config.php";
+require_once 'Core/Init.php';
 
-SFDB::connect();
+Init::loadConstants();
+define('SF_LOCATION', SF_LOCATION_CLI);
+
+Init::_();
 
 $sfArgv = cliParamsToGET();
-
-SFUser::login();
-SFCore::init();
 
 $job = explode('/', @$argv[1]);
 if (count($job) !== 2) {
     echo "Error!! example usage: php console.php ext/action\nOR: ./sf ext/action\n";
     exit;
 }
-$ext = $job[0];
-$action = 'action' . ucfirst($job[1]);
-$file = $_SERVER['DOCUMENT_ROOT'] . "/ext/$ext/console$ext.class.php";
-if (!is_file($file)) {
-    sfCliExit(1, "extension $ext not found");
-}
-include_once $file;
-$class = "Console" . ucfirst($ext);
+$class = 'App\Extensions\\' . ucfirst($job[0]) . '\Console' . ucfirst($job[0]);
+$action = $job[1];
 if (!class_exists($class)) {
     sfCliExit(1, "class $class not found");
 }
-if ($class instanceof SFConsoleBase) {
+if ($class instanceof \Simplex\Core\ConsoleBase) {
     sfCliExit(1, "class $class is not console controller");
 }
 $handler = new $class();

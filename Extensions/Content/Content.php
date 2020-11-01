@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Ext\Content;
+namespace App\Extensions\Content;
 
+use App\Extensions\Breadcrumbs\Breadcrumbs;
 use Simplex\Core\Core;
 use Simplex\Core\DB;
 use Simplex\Core\Page;
@@ -14,7 +15,7 @@ use Simplex\Core\Page;
  * @author Evgeny Shilov <evgeny@internet-menu.ru>
  * @version 1.0
  */
-class Content extends \Simplex\Core\ComBase
+class Content extends \Simplex\Core\ComponentBase
 {
 
     public function &get()
@@ -59,13 +60,13 @@ class Content extends \Simplex\Core\ComBase
 
     private function breadcrumbs($content)
     {
-        ModBreadcrumbs::add($content['title'], $content['path']);
+        Breadcrumbs::add($content['title'], $content['path']);
         $id = (int)$content['pid'];
         while ($id) {
             $q = "SELECT pid, title, path FROM content WHERE content_id=$id";
             $id = 0;
-            if ($content = SFDB::result($q)) {
-                ModBreadcrumbs::add($content['title'], $content['path']);
+            if ($content = DB::result($q)) {
+                Breadcrumbs::add($content['title'], $content['path']);
                 $id = (int)$content['pid'];
             }
         }

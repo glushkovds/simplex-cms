@@ -18,14 +18,23 @@ class Init
         require_once SF_ROOT_PATH . '/config.php';
         \Simplex\Core\Container::set('config', new Config());
 
+        if (SF_LOCATION_ADMIN == SF_LOCATION) {
+            \Simplex\Core\Container::set('page', new \Simplex\Admin\Page());
+            \Simplex\Core\Container::set('core', \Simplex\Admin\Core::class);
+        } else {
+            \Simplex\Core\Container::set('page', new \Simplex\Core\Page());
+            \Simplex\Core\Container::set('core', \Simplex\Core\Core::class);
+        }
+
         // TODO Lazy connect
         \Simplex\Core\DB::connect();
 
-        \Simplex\Core\User::login();
-        \Simplex\Core\Core::init();
-        \Simplex\Core\Page::init();
+        $type = SF_LOCATION_ADMIN == SF_LOCATION ? 'admin' : 'site';
+        \Simplex\Core\User::login($type);
+        \Simplex\Core\Container::getCore()::init();
+        \Simplex\Core\Container::getPage()::init();
 
-        return \Simplex\Core\Core::class;
+        return \Simplex\Core\Container::getCore();
     }
 
     public static function loadConstants()

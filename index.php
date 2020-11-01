@@ -6,7 +6,6 @@ Init::loadConstants();
 define('SF_LOCATION', SF_LOCATION_SITE);
 
 Init::_();
-\Simplex\Core\Container::set('page', new \Simplex\Core\Page());
 
 ob_start();
 \Simplex\Core\Core::execute();

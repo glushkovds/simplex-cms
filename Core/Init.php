@@ -39,6 +39,7 @@ class Init
 
     public static function loadConstants()
     {
+        require_once __DIR__ . '/../vendor/glushkovds/simplex-core/src/constants.php';
         require_once __DIR__ . '/../constants.php';
     }
 

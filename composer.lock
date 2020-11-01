@@ -57,12 +57,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "cf7d489d0b6da7ab7b3136c2371d4da19efef1a1"
+                "reference": "f5119f682091f75225e6c1d9aa62fb7a6e70e336"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/cf7d489d0b6da7ab7b3136c2371d4da19efef1a1",
-                "reference": "cf7d489d0b6da7ab7b3136c2371d4da19efef1a1",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/f5119f682091f75225e6c1d9aa62fb7a6e70e336",
+                "reference": "f5119f682091f75225e6c1d9aa62fb7a6e70e336",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 "simplex-cms",
                 "simplex-core"
             ],
-            "time": "2020-11-01T12:09:47+00:00"
+            "time": "2020-11-01T12:36:39+00:00"
         }
     ],
     "packages-dev": [],

@@ -26,15 +26,18 @@ class ConsoleUpgrade extends ConsoleBase
     public function copyExt($from, $to, $name)
     {
         $this->job("Copy extension $name...", function () use ($from, $to, $name) {
-            $newDirName = ucfirst($name);
             $files = array_filter(explode("\n", shell_exec("find $from/ext/$name -type f")));
             foreach ($files as $file) {
-                $this->job("Upgrade file $file...", function () use ($file, $newDirName, $from, $to, $name) {
-                    $relPath = dirname(str_replace($from, '', $file));
-                    return (new UpFile($file, ['oldRoot' => $from, 'newRoot' => $to]))->upgrade();
-                });
+                $this->copyFile($from, $to, $file);
             }
             return true;
+        });
+    }
+
+    public function copyFile($from, $to, $file)
+    {
+        $this->job("Upgrade file $file...", function () use ($file, $from, $to) {
+            return (new UpFile($file, ['oldRoot' => $from, 'newRoot' => $to]))->upgrade();
         });
     }
 

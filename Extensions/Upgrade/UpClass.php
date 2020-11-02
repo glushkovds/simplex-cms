@@ -27,26 +27,25 @@ class UpClass extends UpFile
         if (strpos($this->data['class'], 'API') === 0) {
             $this->newData['class'] = 'Api' . substr($this->data['class'], 3);
         } else {
-            throw new \Exception("Unknown type of class $this->path");
+//            throw new \Exception("Unknown type of class $this->path");
         }
     }
 
     protected function upgradeNamespace()
     {
-        ['new' => $extensionName] = $this->findExtName();
-        $this->newData['namespace'] = "App\Extensions\\$extensionName";
+        $relPath = dirname(str_replace("{$this->config['oldRoot']}/ext", '', $this->path));
+        $relPathParts = array_filter(explode('/', $relPath));
+        $ns = array_merge(['App', 'Extensions'], array_map('ucfirst', $relPathParts));
+        $this->newData['namespace'] = implode('\\', $ns);
     }
 
-    protected function saveNamespace()
+    protected function extNamespace()
     {
-        if ($this->data['namespace']) {
-            $this->replace($this->data['namespace'], $this->newData['namespace']);
-        } else {
-            $this->replace('<?php', '<?php ' . "\n\n" . $this->newData['namespace'] . ';');
-        }
+        ['new' => $extensionName] = $this->findExtName();
+        return "App\Extensions\\$extensionName";
     }
 
-    protected function simplifyDqn($class)
+    protected function simplifyFqn($class)
     {
         $fqnParts = array_filter(explode('\\', $class));
         if (count($fqnParts) > 1) {
@@ -61,21 +60,12 @@ class UpClass extends UpFile
     protected function upgradeExtends()
     {
         if ($new = $this->knownClasses[$this->data['extends']] ?? null) {
-            $new = $this->simplifyDqn($new);
+            $new = $this->simplifyFqn($new);
             $this->newData['extends'] = $new;
 //            $this->replacePart('extends');
             return;
         }
-        throw new \Exception("Unknown class {$this->data['extends']}");
-    }
-
-    protected function saveUse()
-    {
-        if ($this->data['use']) {
-            jopa();
-        } else {
-//            preg_replace('@namespace @')
-        }
+//        throw new \Exception("Unknown class {$this->data['extends']}");
     }
 
     protected function save()
@@ -84,11 +74,17 @@ class UpClass extends UpFile
         $contents .= "namespace {$this->newData['namespace']};\n\n";
         $contents .= $this->useToStr() . "\n\n";
         $contents .= $this->newData['annotations'] ? $this->newData['annotations'] . "\n" : '';
-        $contents .= "class {$this->newData['class']} extends {$this->newData['extends']}\n{\n";
+        $contents .= "class {$this->newData['class']}";
+        if ($this->newData['extends']) {
+            $contents .= " extends {$this->newData['extends']}";
+        }
+        $contents .= "\n{\n";
         $contents .= $this->newData['classContents'] . "\n}\n";
         $this->newData['contents'] = $contents;
         $newPath = $this->findNewPath();
-        mkdir(dirname($newPath), 0777, true);
+        if (!is_dir(dirname($newPath))) {
+            mkdir(dirname($newPath), 0777, true);
+        }
         file_put_contents($newPath, $contents);
     }
 
@@ -148,7 +144,9 @@ class UpClass extends UpFile
     protected function replaceClasses()
     {
         foreach ($this->knownClasses as $from => $to) {
-            $this->replaceClassContents($from, $this->simplifyDqn($to));
+            if (strpos($this->newData['classContents'], $from)) {
+                $this->replaceClassContents($from, $this->simplifyFqn($to));
+            }
         }
         $matches = [];
         preg_match_all('@([\w\d\_]+)::@', $this->newData['classContents'], $matches);
@@ -158,8 +156,8 @@ class UpClass extends UpFile
         $classes = array_filter(array_unique($classes));
         foreach ($classes as $class) {
             if (strpos($class, 'Model') === 0) {
-                $this->newData['use'][$class] = "{$this->newData['namespace']}\\Models\\$class";
-//                $this->replaceClassContents($from, $this->simplifyDqn($to));
+                $this->newData['use'][$class] = "{$this->extNamespace()}\\Models\\$class";
+//                $this->replaceClassContents($from, $this->simplifyFqn($to));
             }
         }
     }

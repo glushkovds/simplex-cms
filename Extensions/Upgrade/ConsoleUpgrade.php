@@ -31,7 +31,7 @@ class ConsoleUpgrade extends ConsoleBase
             foreach ($files as $file) {
                 $this->job("Upgrade file $file...", function () use ($file, $newDirName, $from, $to, $name) {
                     $relPath = dirname(str_replace($from, '', $file));
-                    return (new UpFile($file, "$to/Extensions/$newDirName/$relPath"))->upgrade();
+                    return (new UpFile($file, ['oldRoot' => $from, 'newRoot' => $to]))->upgrade();
                 });
             }
             return true;

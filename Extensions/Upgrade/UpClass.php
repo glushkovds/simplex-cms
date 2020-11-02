@@ -9,25 +9,23 @@ use App\Core\Console\Alert;
 class UpClass extends UpFile
 {
 
-    protected $knownClasses = [
-        'APIBase' => 'Simplex\Core\ApiBase',
-    ];
-
     public function upgrade()
     {
         $this->upgradeNamespace();
         $this->upgradeClass();
         $this->upgradeExtends();
+        $this->replaceClasses();
         $this->save();
-        print_r($this->data);
-        print_r($this->newData);
-        die;
+        return true;
+//        print_r($this->data);
+//        print_r($this->newData);
+//        die;
     }
 
     protected function upgradeClass()
     {
         if (strpos($this->data['class'], 'API') === 0) {
-            $this->newData['class'] = substr($this->data['class'], 3);
+            $this->newData['class'] = 'Api' . substr($this->data['class'], 3);
         } else {
             throw new \Exception("Unknown type of class $this->path");
         }
@@ -35,9 +33,7 @@ class UpClass extends UpFile
 
     protected function upgradeNamespace()
     {
-        $matches = [];
-        preg_match('@Extensions/([\w\d_]+)@', $this->newPath, $matches);
-        $extensionName = $matches[1];
+        ['new' => $extensionName] = $this->findExtName();
         $this->newData['namespace'] = "App\Extensions\\$extensionName";
     }
 
@@ -50,16 +46,22 @@ class UpClass extends UpFile
         }
     }
 
+    protected function simplifyDqn($class)
+    {
+        $fqnParts = array_filter(explode('\\', $class));
+        if (count($fqnParts) > 1) {
+//                $namespace = array_slice($fqnParts, -1);
+            $newFull = $class;
+            $class = end($fqnParts);
+            $this->newData['use'][$newFull] = $newFull;
+        }
+        return $class;
+    }
+
     protected function upgradeExtends()
     {
         if ($new = $this->knownClasses[$this->data['extends']] ?? null) {
-            $fqnParts = array_filter(explode('\\', $new));
-            if (count($fqnParts) > 1) {
-//                $namespace = array_slice($fqnParts, -1);
-                $newFull = $new;
-                $new = end($fqnParts);
-                $this->newData['use'][$newFull] = $newFull;
-            }
+            $new = $this->simplifyDqn($new);
             $this->newData['extends'] = $new;
 //            $this->replacePart('extends');
             return;
@@ -85,7 +87,14 @@ class UpClass extends UpFile
         $contents .= "class {$this->newData['class']} extends {$this->newData['extends']}\n{\n";
         $contents .= $this->newData['classContents'] . "\n}\n";
         $this->newData['contents'] = $contents;
-        file_put_contents($this->newPath, $contents);
+        $newPath = $this->findNewPath();
+        mkdir(dirname($newPath), 0777, true);
+        file_put_contents($newPath, $contents);
+    }
+
+    protected function findNewName()
+    {
+        return $this->newData['class'] . '.php';
     }
 
     protected function useToStr()
@@ -129,6 +138,30 @@ class UpClass extends UpFile
     protected function replacePart($partName)
     {
         $this->replace($this->data[$partName], $this->newData[$partName]);
+    }
+
+    protected function replaceClassContents($search, $replace)
+    {
+        $this->newData['classContents'] = str_replace($search, $replace, $this->newData['classContents']);
+    }
+
+    protected function replaceClasses()
+    {
+        foreach ($this->knownClasses as $from => $to) {
+            $this->replaceClassContents($from, $this->simplifyDqn($to));
+        }
+        $matches = [];
+        preg_match_all('@([\w\d\_]+)::@', $this->newData['classContents'], $matches);
+        $classes = $matches[1] ?? [];
+        preg_match_all('@new ([\w\d\_]+)@', $this->newData['classContents'], $matches);
+        $classes = array_merge($classes, $matches[1] ?? []);
+        $classes = array_filter(array_unique($classes));
+        foreach ($classes as $class) {
+            if (strpos($class, 'Model') === 0) {
+                $this->newData['use'][$class] = "{$this->newData['namespace']}\\Models\\$class";
+//                $this->replaceClassContents($from, $this->simplifyDqn($to));
+            }
+        }
     }
 
 }

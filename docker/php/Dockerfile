@@ -1,13 +1,17 @@
-FROM ulsmith/alpine-apache-php7
+FROM php:7.4-apache
 
-# fix work iconv library with alphine
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+RUN apt-get update
+# Install system dependencies
+RUN apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev \
+    zip \
+    unzip \
+    --no-install-recommends
 
-# install htpasswd
-RUN apk add apache2-utils
-
-RUN echo "error_log = /logs/error.log" >> /etc/php7/php.ini
-
-# add umask 0002 to container - to create files in 664 mode
-RUN sed -i '$i umask 0002' /bootstrap/start.sh
+# Install required modules
+RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring exif pcntl bcmath gd

@@ -14,8 +14,19 @@ class UpFile
     protected $knownClasses = [
         'APIBase' => 'Simplex\Core\ApiBase',
         'SFDB' => 'Simplex\Core\DB',
+        'SFDBWhere' => 'Simplex\Core\DB\Where',
+        'SFModelBase' => 'Simplex\Core\ModelBase',
         'SFUser' => 'Simplex\Core\User',
-//        'Notifier' => 'Simplex',
+        'SFConfig' => 'Simplex\Core\Container::getConfig()',
+        'SFCore' => 'Simplex\Core\Core',
+        'SFPage' => 'Simplex\Core\Page',
+        'SFComBase' => 'Simplex\Core\ComponentBase',
+        'SFModBase' => 'Simplex\Core\ModuleBase',
+        'ComAction' => 'Simplex\Core\ControllerBase',
+        'Notifier' => 'Simplex\Core\Alert\Site\Alert',
+        'PlugMail' => 'Simplex\Core\Mail',
+        'PlugSMS' => 'Simplex\Core\Sms',
+        'Service' => 'Simplex\Core\Service',
     ];
 
     public function __construct($path, $config)

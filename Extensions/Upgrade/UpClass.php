@@ -11,12 +11,20 @@ class UpClass extends UpFile
 
     public function upgrade()
     {
+        $this->upgradeInner();
+        $this->save();
+        return true;
+//        print_r($this->data);
+//        print_r($this->newData);
+//        die;
+    }
+
+    protected function upgradeInner()
+    {
         $this->upgradeNamespace();
         $this->upgradeClass();
         $this->upgradeExtends();
         $this->replaceClasses();
-        $this->save();
-        return true;
 //        print_r($this->data);
 //        print_r($this->newData);
 //        die;
@@ -49,7 +57,6 @@ class UpClass extends UpFile
     {
         $fqnParts = array_filter(explode('\\', $class));
         if (count($fqnParts) > 1) {
-//                $namespace = array_slice($fqnParts, -1);
             $newFull = $class;
             $class = end($fqnParts);
             $this->newData['use'][$newFull] = $newFull;
@@ -62,7 +69,6 @@ class UpClass extends UpFile
         if ($new = $this->knownClasses[$this->data['extends']] ?? null) {
             $new = $this->simplifyFqn($new);
             $this->newData['extends'] = $new;
-//            $this->replacePart('extends');
             return;
         }
 //        throw new \Exception("Unknown class {$this->data['extends']}");
@@ -156,10 +162,24 @@ class UpClass extends UpFile
         $classes = array_filter(array_unique($classes));
         foreach ($classes as $class) {
             if (strpos($class, 'Model') === 0) {
-                $this->newData['use'][$class] = "{$this->extNamespace()}\\Models\\$class";
+                $classParts = static::splitCamelCase($class);
+                $modelExtName = $classParts[1];
+                $ns = "App\\Extensions\\$modelExtName\\Models\\$class";
+                $this->newData['use'][$ns] = $ns;
 //                $this->replaceClassContents($from, $this->simplifyFqn($to));
             }
         }
+    }
+
+    protected static function splitCamelCase($input)
+    {
+        return preg_split(
+            '/(^[^A-Z]+|[A-Z][^A-Z]+)/',
+            $input,
+            -1, /* no limit for replacement count */
+            PREG_SPLIT_NO_EMPTY /*don't return empty elements*/
+            | PREG_SPLIT_DELIM_CAPTURE /*don't strip anything from output array*/
+        );
     }
 
 }

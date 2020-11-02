@@ -12,8 +12,6 @@ use Simplex\Core\Page;
  *
  * Output content on site page
  *
- * @author Evgeny Shilov <evgeny@internet-menu.ru>
- * @version 1.0
  */
 class Content extends \Simplex\Core\ComponentBase
 {

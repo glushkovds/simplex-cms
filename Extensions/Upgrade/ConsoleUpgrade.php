@@ -23,6 +23,17 @@ class ConsoleUpgrade extends ConsoleBase
         }
     }
 
+    public function copyDb($from, $to, $name)
+    {
+        $this->job("Copy extension $name...", function () use ($from, $to, $name) {
+            $files = array_filter(explode("\n", shell_exec("find $from/ext/$name -type f")));
+            foreach ($files as $file) {
+                $this->copyFile($from, $to, $file);
+            }
+            return true;
+        });
+    }
+
     public function copyExt($from, $to, $name)
     {
         $this->job("Copy extension $name...", function () use ($from, $to, $name) {

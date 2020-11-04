@@ -147,6 +147,8 @@ abstract class UpEntity extends UpFile
         }
         $result = [
             'contents' => $contents,
+            'entityType' => static::$name,
+            'entity' => $class,
             static::$name => $class,
             'extends' => $extends,
             'implements' => $implements,
@@ -156,6 +158,11 @@ abstract class UpEntity extends UpFile
             'classContents' => $classContents,
         ];
         return $result;
+    }
+
+    public function getFqn()
+    {
+        return implode('\\', array_filter([$this->newData['namespace'], $this->newData['entity']]));
     }
 
     protected function replacePart($partName)

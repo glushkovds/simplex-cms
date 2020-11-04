@@ -156,6 +156,14 @@ class UpFile
         }
     }
 
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
     protected function getNewDbCredentials()
     {
         return static::getDbCredentials($this->config['newRoot'] . '/config.php');

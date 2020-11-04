@@ -41,23 +41,37 @@ class UpFile
         return (bool)strpos($this->path, '.class.php');
     }
 
+    protected function isInterface()
+    {
+        return (bool)strpos($this->path, '.interface.php');
+    }
+
     protected function isTpl()
     {
-        return (bool)strpos($this->path, '.tpl');
+        return (bool)strpos($this->path, '.tpl')
+            || !$this->isClass() && strpos($this->path, '.php');
     }
 
     protected function isStatic()
     {
-        return (bool)strpos($this->path, '.css')
-            || (bool)strpos($this->path, '.js')
-            || (bool)strpos($this->path, '.png')
-            || (bool)strpos($this->path, '.jpg');
+        return !$this->isClass() && !$this->isTpl() && !$this->isInterface();
+//        $isStatic = false;
+//        $fexts = 'png|gif|jpg|jpeg|ico|js|css|php|htm|html|swf|mp3|txt|pdf|doc|docx|xls|xlsx|zip|rar'
+//            . '|ppt|pptx|xml|ttf|woff|eot|otf|less|csv|tmp|class|old|template|md|json';
+//        foreach (explode('|', $fexts) as $fext) {
+//            $isStatic |= preg_match("@\.$fext$@", $this->path);
+//        }
+//        return $isStatic;
     }
 
     public function upgrade()
     {
         if ($this->isClass()) {
             $upgrader = new UpClass($this->path, $this->config);
+            return $upgrader->upgrade();
+        }
+        if ($this->isInterface()) {
+            $upgrader = new UpInterface($this->path, $this->config);
             return $upgrader->upgrade();
         }
         if ($this->isTpl()) {
@@ -70,26 +84,32 @@ class UpFile
         throw new \Exception("Unknown type of file $this->path");
     }
 
-    protected function findExtName()
+    protected function getPlace()
     {
-        if (strpos($this->path, '/ext/') !== false) {
+        $getPlace = function ($what) {
             $pathParts = explode('/', $this->path);
             foreach ($pathParts as $index => $part) {
-                if ($part == 'ext') {
+                if ($part == $what) {
                     break;
                 }
             }
             $oldExtName = $pathParts[$index + 1];
             $extName = ucfirst($oldExtName);
-            return ['old' => $oldExtName, 'new' => $extName];
+            return ['oldPlace' => $oldExtName, 'newPlace' => $extName];
+        };
+        if (strpos($this->path, '/ext/') !== false) {
+            return ['oldBase' => 'ext', 'newBase' => 'Extensions'] + $getPlace('ext');
+        }
+        if (strpos($this->path, '/plug/') !== false) {
+            return ['oldBase' => 'plug', 'newBase' => 'Plugins'] + $getPlace('plug');
         }
     }
 
     protected function findNewPath()
     {
-        ['old' => $oldExtName, 'new' => $extName] = $this->findExtName();
-        $relPath = dirname(str_replace("{$this->config['oldRoot']}/ext/$oldExtName", '', $this->path));
-        return rtrim("{$this->config['newRoot']}/Extensions/$extName$relPath", '/') . '/' . $this->findNewName();
+        $p = $this->getPlace();
+        $relPath = dirname(str_replace("{$this->config['oldRoot']}/{$p['oldBase']}/{$p['oldPlace']}", '', $this->path));
+        return rtrim("{$this->config['newRoot']}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
     }
 
     protected function findNewName()
@@ -134,6 +154,35 @@ class UpFile
         foreach ($this->knownClasses as $from => $to) {
             $this->replace($from, $to);
         }
+    }
+
+    protected function getNewDbCredentials()
+    {
+        return static::getDbCredentials($this->config['newRoot'] . '/config.php');
+    }
+
+    public static function getDbCredentials($file)
+    {
+        $raw = file_get_contents($file);
+        $data = [];
+        $matches = [];
+        preg_match("@db_host = '(.+)';@U", $raw, $matches);
+        $data['host'] = $matches[1];
+        preg_match("@db_user = '(.+)';@U", $raw, $matches);
+        $data['user'] = $matches[1];
+        preg_match("@db_pass = '(.+)';@U", $raw, $matches);
+        $data['pass'] = $matches[1];
+        preg_match("@db_name = '(.+)';@U", $raw, $matches);
+        $data['db'] = $matches[1];
+        return $data;
+    }
+
+    protected function getNewDb()
+    {
+        $cred = $this->getNewDbCredentials();
+        $db = new MySQL();
+        $db->connect(...array_values($cred));
+        return $db;
     }
 
 }

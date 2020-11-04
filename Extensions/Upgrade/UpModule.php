@@ -4,7 +4,7 @@
 namespace App\Extensions\Upgrade;
 
 
-class UpComponent extends UpClass
+class UpModule extends UpClass
 {
 
 
@@ -13,7 +13,7 @@ class UpComponent extends UpClass
         parent::upgradeInner();
         $db = $this->getNewDb();
         $fqnClass = $db->escape($this->newData['namespace'].'\\'.$this->newData['class']);
-        $db->query("update component set class='$fqnClass' WHERE class='{$this->data['class']}'");
+        $db->query("update module set class='$fqnClass' WHERE class='{$this->data['class']}'");
     }
 
 }

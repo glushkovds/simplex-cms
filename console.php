@@ -60,7 +60,7 @@ if ($actionParams = $reflection->getParameters()) {
             }
         }
     }
-    if (count($paramValues) < count($actionParams)) {
+    if (count($paramValues) < $reflection->getNumberOfRequiredParameters()) {
         sfCliExit(1, "not enough params");
     }
 }

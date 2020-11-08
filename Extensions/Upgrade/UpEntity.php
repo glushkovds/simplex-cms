@@ -57,7 +57,7 @@ abstract class UpEntity extends UpFile
     protected function upgradeNamespace()
     {
         $p = $this->getPlace();
-        $relPath = dirname(str_replace("{$this->config['oldRoot']}/{$p['oldBase']}", '', $this->path));
+        $relPath = dirname(str_replace("{$this->config->fromRoot}/{$p['oldBase']}", '', $this->path));
         $relPathParts = array_filter(explode('/', $relPath));
         $ns = array_merge(['App', $p['newBase']], array_map('ucfirst', $relPathParts));
         $this->newData['namespace'] = implode('\\', $ns);

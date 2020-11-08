@@ -8,10 +8,9 @@ use Simplex\Admin\Plugins\Alert\Alert;
 
 class PatchNamespaces
 {
-    protected $classes = [];
-    /** @var Config */
-    protected $config;
+    use Configable;
 
+    protected $classes = [];
     protected $files = [];
 
     public function __construct($config)

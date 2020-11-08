@@ -8,10 +8,12 @@ use App\Extensions\Upgrade\Hooks\Hooks;
 
 class UpFile
 {
+
+    use Configable;
+
     protected $path;
     protected $data;
     public $newData;
-    protected $config;
 
     protected $knownClasses = [
         'APIBase' => 'Simplex\Core\ApiBase',
@@ -63,13 +65,6 @@ class UpFile
     protected function isStatic()
     {
         return !$this->isClass() && !$this->isTpl() && !$this->isInterface();
-//        $isStatic = false;
-//        $fexts = 'png|gif|jpg|jpeg|ico|js|css|php|htm|html|swf|mp3|txt|pdf|doc|docx|xls|xlsx|zip|rar'
-//            . '|ppt|pptx|xml|ttf|woff|eot|otf|less|csv|tmp|class|old|template|md|json';
-//        foreach (explode('|', $fexts) as $fext) {
-//            $isStatic |= preg_match("@\.$fext$@", $this->path);
-//        }
-//        return $isStatic;
     }
 
     protected function getHooks($up = null)
@@ -137,10 +132,10 @@ class UpFile
     {
         $p = $this->getPlace();
         if ($p) {
-            $relPath = dirname(str_replace("{$this->config['oldRoot']}/{$p['oldBase']}/{$p['oldPlace']}", '', $this->path));
-            return rtrim("{$this->config['newRoot']}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
+            $relPath = dirname(str_replace("{$this->config->fromRoot}/{$p['oldBase']}/{$p['oldPlace']}", '', $this->path));
+            return rtrim("{$this->config->toRoot}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
         }
-        return str_replace($this->config['oldRoot'], $this->config['newRoot'], $this->path);
+        return str_replace($this->config->fromRoot, $this->config->toRoot, $this->path);
     }
 
     protected function findNewName()
@@ -214,33 +209,6 @@ class UpFile
         return $this->data;
     }
 
-    protected function getNewDbCredentials()
-    {
-        return static::getDbCredentials($this->config['newRoot'] . '/config.php');
-    }
 
-    public static function getDbCredentials($file)
-    {
-        $raw = file_get_contents($file);
-        $data = [];
-        $matches = [];
-        preg_match("@db_host = '(.+)';@U", $raw, $matches);
-        $data['host'] = $matches[1];
-        preg_match("@db_user = '(.+)';@U", $raw, $matches);
-        $data['user'] = $matches[1];
-        preg_match("@db_pass = '(.+)';@U", $raw, $matches);
-        $data['pass'] = $matches[1];
-        preg_match("@db_name = '(.+)';@U", $raw, $matches);
-        $data['db'] = $matches[1];
-        return $data;
-    }
-
-    protected function getNewDb()
-    {
-        $cred = $this->getNewDbCredentials();
-        $db = new MySQL();
-        $db->connect(...array_values($cred));
-        return $db;
-    }
 
 }

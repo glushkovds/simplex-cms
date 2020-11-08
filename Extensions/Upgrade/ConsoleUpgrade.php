@@ -10,8 +10,7 @@ use Simplex\Core\ConsoleBase;
 class ConsoleUpgrade extends ConsoleBase
 {
 
-    /** @var Config */
-    protected $config;
+    use Configable;
 
     public function createConfig($from, $to, $configPath, $newDbName = null)
     {
@@ -36,11 +35,20 @@ class ConsoleUpgrade extends ConsoleBase
         }
         if ($copyDb) {
             $this->upgradeConfig($this->config->configPath);
-//            $this->copyDb($this->config->configPath);
+            $this->copyDb($this->config->configPath);
+            $handler = new UpgradeDB($this->config);
+            $handler->upgradeModules();
         }
         $this->copyExts($this->config->configPath);
         $this->copyPlugs($this->config->configPath);
         $this->copyTheme($this->config->configPath);
+    }
+
+    public function upgradeDb($configPath)
+    {
+        $this->config = new Config($configPath);
+        $handler = new UpgradeDB($this->config);
+        $handler->upgrade();
     }
 
     public function copyTheme($configPath)
@@ -86,15 +94,8 @@ class ConsoleUpgrade extends ConsoleBase
     public function upgradeConfig($configPath)
     {
         $this->config = new Config($configPath);
-        static::job('Upgrading config...', function () {
-            $to = $this->config->toRoot;
-            $newConfig = file_get_contents($to . '/config.php');
-            $newConfig = preg_replace("@(db_host = ')(.+)(';)@U", "$1{$this->config->toDbHost}$3", $newConfig);
-            $newConfig = preg_replace("@(db_user = ')(.+)(';)@U", "$1{$this->config->toDbUser}$3", $newConfig);
-            $newConfig = preg_replace("@(db_pass = ')(.+)(';)@U", "$1{$this->config->toDbPass}$3", $newConfig);
-            $newConfig = preg_replace("@(db_name = ')(.+)(';)@U", "$1{$this->config->toDbName}$3", $newConfig);
-            return file_put_contents($to . '/config.php', $newConfig);
-        });
+        $handler = new UpgradeDB($this->config);
+        $handler->upgradeConfig();
     }
 
     /**
@@ -108,21 +109,8 @@ class ConsoleUpgrade extends ConsoleBase
     public function copyDb($configPath)
     {
         $this->config = new Config($configPath);
-        static::job("Dump db {$this->config->fromDbName}...", function () {
-            $login = $this->config->fromDbUser;
-            $pass = $this->config->fromDbPass;
-            $host = $this->config->fromDbHost;
-            $db = $this->config->fromDbName;
-            return shell_exec("mysqldump -u$login -p$pass -h $host $db > /tmp/1.sql") == '';
-        });
-        static::job("Import db {$this->config->toDbName}...", function () {
-            $login = $this->config->toDbUser;
-            $pass = $this->config->toDbPass;
-            $host = $this->config->toDbHost;
-            $db = $this->config->toDbName;
-            return shell_exec("mysql -u$login -p$pass -h $host -e 'create database $db'") == ''
-                && shell_exec("mysql -u$login -p$pass -h $host -e 'use $db; \. /tmp/1.sql'") == '';
-        });
+        $handler = new UpgradeDB($this->config);
+        $handler->copyDb();
     }
 
     public function copyExt($configPath, $name)
@@ -156,10 +144,8 @@ class ConsoleUpgrade extends ConsoleBase
     {
         $this->config = new Config($configPath);
         static::job("Upgrade file $file...", function () use ($file) {
-            $from = $this->config->fromRoot;
-            $to = $this->config->toRoot;
             try {
-                return (new UpFile($file, ['oldRoot' => $from, 'newRoot' => $to]))->upgrade();
+                return (new UpFile($file, $this->config))->upgrade();
             } catch (SkipFileException $e) {
                 return ['result' => 'Skip', 'message' => $e->getMessage()];
             }

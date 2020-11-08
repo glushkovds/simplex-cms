@@ -39,18 +39,52 @@ class UpClass extends UpEntity
 
     protected function upgradeClass()
     {
-        $classParts = static::splitCamelCase($this->data['class']);
-        if (strpos($this->data['class'], 'API') === 0) {
-            $this->newData['class'] = 'Api' . substr($this->data['class'], 3);
-        } elseif ($classParts[0] == 'Com') {
-            $this->newData['class'] = substr($this->data['class'], 3);
-        } elseif ($classParts[0] == 'Mod') {
-            $this->newData['class'] = 'Module' . substr($this->data['class'], 3);
-        } elseif ($classParts[0] == 'Plug') {
-            $this->newData['class'] = substr($this->data['class'], 4);
-        } else {
-//            throw new \Exception("Unknown type of class $this->path");
+        if ($newClass = static::upgradeClassName($this->data['class'])) {
+            ['class' => $this->newData['class']] = static::classNameInfo($newClass);
         }
+    }
+
+    public static function upgradeClassName($class)
+    {
+        if($class == 'PlugFrontEnd'){
+            $class = 'PlugFrontend';
+        }
+        $classParts = static::splitCamelCase($class);
+        $extName = $classParts[1] ?? null;
+        if (empty($extName)) {
+            return false;
+        }
+        if (strpos($class, 'API') === 0) {
+            $cn = 'Api' . substr($class, 3);
+            $ns = "App\Extensions\\$extName";
+        } elseif ($classParts[0] == 'Com') {
+            $cn = substr($class, 3);
+            $ns = "App\Extensions\\$extName";
+        } elseif ($classParts[0] == 'Mod') {
+            $cn = 'Module' . substr($class, 3);
+            $ns = "App\Extensions\\$extName";
+        } elseif ($classParts[0] == 'Plug') {
+            $cn = substr($class, 4);
+            if($cn == 'JQuery'){
+                $cn = 'Jquery';
+            }
+            $ns = "App\Plugins\\$extName";
+        } elseif ($classParts[0] == 'Model') {
+            $cn = $class;
+            $ns = "App\\Extensions\\$extName\\Models\\$class";
+        } else {
+            return false;
+        }
+
+        return "$ns\\$cn";
+    }
+
+    public static function classNameInfo($class)
+    {
+        $fqnParts = explode('\\', $class);
+        $cn = end($fqnParts);
+        $ns = implode('\\', array_slice($fqnParts, 0, -1));
+        return ['fqn' => $class, 'class' => $cn, 'namespace' => $ns];
     }
 
     protected function upgradeExtends()
@@ -72,12 +106,6 @@ class UpClass extends UpEntity
         $stack[] = static::$name;
         $stack[] = $this->newData[static::$name];
         return implode(' ', $stack);
-    }
-
-
-    protected function replaceClassContents($search, $replace)
-    {
-        $this->newData['classContents'] = str_replace($search, $replace, $this->newData['classContents']);
     }
 
     protected static function parse($path)

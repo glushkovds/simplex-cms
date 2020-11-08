@@ -4,11 +4,13 @@
 namespace App\Extensions\Upgrade;
 
 
+use App\Extensions\Upgrade\Hooks\Hooks;
+
 class UpFile
 {
     protected $path;
     protected $data;
-    protected $newData;
+    public $newData;
     protected $config;
 
     protected $knownClasses = [
@@ -27,6 +29,7 @@ class UpFile
         'PlugMail' => 'Simplex\Core\Mail',
         'PlugSMS' => 'Simplex\Core\Sms',
         'Service' => 'Simplex\Core\Service',
+        'PlugJQuery' => 'App\Plugins\Jquery\Jquery',
     ];
 
     public function __construct($path, $config)
@@ -34,6 +37,11 @@ class UpFile
         $this->path = $path;
         $this->config = $config;
         $this->newData = $this->data = static::parse($path);
+    }
+
+    public function addKnownClasses($classes)
+    {
+        $this->knownClasses += $classes;
     }
 
     protected function isClass()
@@ -64,18 +72,37 @@ class UpFile
 //        return $isStatic;
     }
 
+    protected function getHooks($up = null)
+    {
+        if (empty($up)) {
+            $up = $this;
+        }
+        return new Hooks($up);
+    }
+
     public function upgrade()
     {
         if ($this->isClass()) {
             $upgrader = new UpClass($this->path, $this->config);
-            return $upgrader->upgrade();
+            $hooks = $this->getHooks($upgrader);
+            $hooks->before('class');
+            $result = $upgrader->upgrade();
+            $hooks->after('class');
+            return $result;
         }
         if ($this->isInterface()) {
             $upgrader = new UpInterface($this->path, $this->config);
-            return $upgrader->upgrade();
+            $hooks = $this->getHooks($upgrader);
+            $hooks->before('interface');
+            $result = $upgrader->upgrade();
+            $hooks->after('interface');
+            return $result;
         }
         if ($this->isTpl()) {
+            $hooks = $this->getHooks();
+            $hooks->before('tpl');
             $this->replaceClasses();
+            $hooks->after('tpl');
             return $this->save();
         }
         if ($this->isStatic()) {
@@ -103,13 +130,17 @@ class UpFile
         if (strpos($this->path, '/plug/') !== false) {
             return ['oldBase' => 'plug', 'newBase' => 'Plugins'] + $getPlace('plug');
         }
+        return null;
     }
 
     protected function findNewPath()
     {
         $p = $this->getPlace();
-        $relPath = dirname(str_replace("{$this->config['oldRoot']}/{$p['oldBase']}/{$p['oldPlace']}", '', $this->path));
-        return rtrim("{$this->config['newRoot']}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
+        if ($p) {
+            $relPath = dirname(str_replace("{$this->config['oldRoot']}/{$p['oldBase']}/{$p['oldPlace']}", '', $this->path));
+            return rtrim("{$this->config['newRoot']}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
+        }
+        return str_replace($this->config['oldRoot'], $this->config['newRoot'], $this->path);
     }
 
     protected function findNewName()
@@ -117,7 +148,7 @@ class UpFile
         return basename($this->path);
     }
 
-    protected function save()
+    public function save()
     {
         $newPath = $this->findNewPath();
         if (!is_dir(dirname($newPath))) {
@@ -144,7 +175,7 @@ class UpFile
         return $result;
     }
 
-    protected function replace($search, $replace)
+    public function replace($search, $replace)
     {
         $this->newData['contents'] = str_replace($search, $replace, $this->newData['contents']);
     }
@@ -154,6 +185,25 @@ class UpFile
         foreach ($this->knownClasses as $from => $to) {
             $this->replace($from, $to);
         }
+        $classes = static::findClassesInContent($this->newData['contents']);
+        foreach ($classes as $class) {
+            $newClass = UpClass::upgradeClassName($class);
+            if ($newClass) {
+//                ['fqn' => $fqn] = UpClass::classNameInfo($newClass);
+                $this->replace($class, $newClass);
+            }
+        }
+    }
+
+    protected static function findClassesInContent($content)
+    {
+        $matches = [];
+        preg_match_all('@([\w\d\_]+)::@', $content, $matches);
+        $classes = $matches[1] ?? [];
+        preg_match_all('@new ([\w\d\_]+)@', $content, $matches);
+        $classes = array_merge($classes, $matches[1] ?? []);
+        $classes = array_filter(array_unique($classes));
+        return $classes;
     }
 
     /**

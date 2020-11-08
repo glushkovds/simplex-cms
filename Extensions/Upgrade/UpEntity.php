@@ -81,7 +81,7 @@ abstract class UpEntity extends UpFile
     }
 
 
-    protected function save()
+    public function save()
     {
         $contents = '<?php' . "\n\n";
         $contents .= "namespace {$this->newData['namespace']};\n\n";
@@ -170,7 +170,7 @@ abstract class UpEntity extends UpFile
         $this->replace($this->data[$partName], $this->newData[$partName]);
     }
 
-    protected function replaceClassContents($search, $replace)
+    public function replace($search, $replace)
     {
         $this->newData['classContents'] = str_replace($search, $replace, $this->newData['classContents']);
     }
@@ -179,22 +179,16 @@ abstract class UpEntity extends UpFile
     {
         foreach ($this->knownClasses as $from => $to) {
             if (strpos($this->newData['classContents'], $from)) {
-                $this->replaceClassContents($from, $this->simplifyFqn($to));
+                $this->replace($from, $this->simplifyFqn($to));
             }
         }
-        $matches = [];
-        preg_match_all('@([\w\d\_]+)::@', $this->newData['classContents'], $matches);
-        $classes = $matches[1] ?? [];
-        preg_match_all('@new ([\w\d\_]+)@', $this->newData['classContents'], $matches);
-        $classes = array_merge($classes, $matches[1] ?? []);
-        $classes = array_filter(array_unique($classes));
+        $classes = static::findClassesInContent($this->newData['classContents']);
         foreach ($classes as $class) {
-            if (strpos($class, 'Model') === 0) {
-                $classParts = static::splitCamelCase($class);
-                $modelExtName = $classParts[1];
-                $ns = "App\\Extensions\\$modelExtName\\Models\\$class";
-                $this->newData['use'][$ns] = $ns;
-//                $this->replaceClassContents($from, $this->simplifyFqn($to));
+            $newClass = UpClass::upgradeClassName($class);
+            if ($newClass) {
+                ['namespace' => $ns, 'class' => $cn] = UpClass::classNameInfo($newClass);
+                $this->newData['use'][$newClass] = $newClass;
+                $this->replace($class, $cn);
             }
         }
     }

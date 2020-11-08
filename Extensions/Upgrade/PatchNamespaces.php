@@ -4,11 +4,15 @@
 namespace App\Extensions\Upgrade;
 
 
+use Simplex\Admin\Plugins\Alert\Alert;
+
 class PatchNamespaces
 {
     protected $classes = [];
     /** @var Config */
     protected $config;
+
+    protected $files = [];
 
     public function __construct($config)
     {
@@ -18,6 +22,8 @@ class PatchNamespaces
     public function upgrade()
     {
         $this->collectClasses();
+        $this->collectToUpgrade();
+        $this->upgradeInner();
     }
 
     protected function collectClasses()
@@ -40,9 +46,41 @@ class PatchNamespaces
                 }
                 return false;
             }, $files)));
-            print_r($this->classes);
-            die;
+            Alert::success('Found ' . count($this->classes));
             return true;
+        });
+    }
+
+    protected function collectToUpgrade()
+    {
+        ConsoleUpgrade::job('Collect files to upgrade...', function () {
+            $this->files = array_filter(explode("\n", shell_exec("find {$this->config->toRoot} -type f -name '*.php' \( -path '{$this->config->toRoot}/Extensions/*' -o -path '{$this->config->toRoot}/Plugins/*' \)")));
+            Alert::success('Found ' . count($this->files));
+            return true;
+        });
+    }
+
+    protected function upgradeInner()
+    {
+        ConsoleUpgrade::job('Upgrading user defined classes...', function () {
+            $classes = [];
+            foreach ($this->classes as $c) {
+                ['class' => $cn] = UpClass::classNameInfo($c);
+                $classes[$cn] = $c;
+            }
+            foreach ($this->files as $file) {
+                ConsoleUpgrade::job("Upgrade file $file...", function () use ($file, $classes) {
+                    $from = $this->config->fromRoot;
+                    $to = $this->config->toRoot;
+                    try {
+                        $fileHandler = (new UpFile($file, ['oldRoot' => $from, 'newRoot' => $to]));
+                        $fileHandler->addKnownClasses($classes);
+                        return $fileHandler->upgrade();
+                    } catch (SkipFileException $e) {
+                        return ['result' => 'Skip', 'message' => $e->getMessage()];
+                    }
+                });
+            }
         });
     }
 

@@ -36,10 +36,30 @@ class ConsoleUpgrade extends ConsoleBase
         }
         if ($copyDb) {
             $this->upgradeConfig($this->config->configPath);
-            $this->copyDb($this->config->configPath);
+//            $this->copyDb($this->config->configPath);
         }
         $this->copyExts($this->config->configPath);
         $this->copyPlugs($this->config->configPath);
+        $this->copyTheme($this->config->configPath);
+    }
+
+    public function copyTheme($configPath)
+    {
+        $this->config = new Config($configPath);
+        $from = $this->config->fromRoot;
+        $to = $this->config->toRoot;
+        static::job('Drop previous theme...', function () use ($to) {
+            $result = shell_exec("[ -d $to/theme ] && rm -rf $to/theme 2>&1");
+            return $result == '';
+        });
+        static::job("Copy theme...", function () {
+            $from = $this->config->fromRoot;
+            $files = array_filter(explode("\n", shell_exec("find $from/theme -type f")));
+            foreach ($files as $file) {
+                $this->copyFile($this->config->configPath, $file);
+            }
+            return true;
+        });
     }
 
     public function copyExts($configPath)

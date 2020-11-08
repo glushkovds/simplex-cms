@@ -9,7 +9,7 @@ class Auth extends Hook
     public function after($what)
     {
         if ('tpl' == $what) {
-            $this->up->replace('/login.php', '/login/');
+            $this->up->replace('/login.php', '/auth/login/');
         }
     }
 }

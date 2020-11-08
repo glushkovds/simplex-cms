@@ -71,7 +71,7 @@ class UpClass extends UpEntity
             $ns = "App\Plugins\\$extName";
         } elseif ($classParts[0] == 'Model') {
             $cn = $class;
-            $ns = "App\\Extensions\\$extName\\Models\\$class";
+            $ns = "App\\Extensions\\$extName\\Models";
         } else {
             return false;
         }

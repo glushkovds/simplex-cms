@@ -1,6 +1,10 @@
 <?php
 
-class PlugAlert {
+namespace App\Plugins\Alert;
+
+use Simplex\Core\Page;
+
+class Alert {
 
     protected static $s;
     protected static $isInited = false;
@@ -11,7 +15,7 @@ class PlugAlert {
 
     public static function init() {
         if (!self::$isInited) {
-            SFPage::css('/plug/alert/alert.css');
+            Page::css('/Plugins/Alert/alert.css');
             self::$s = & $_SESSION['plug_alert'];
             self::$isInited = true;
         }

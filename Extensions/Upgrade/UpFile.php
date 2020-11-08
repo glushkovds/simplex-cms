@@ -24,7 +24,8 @@ class UpFile
         'SFConfig' => 'Simplex\Core\Container::getConfig()',
         'SFCore' => 'Simplex\Core\Core',
         'SFPage' => 'Simplex\Core\Page',
-        'SFComBase' => 'Simplex\Core\ComponentBase',
+//        'SFComBase' => 'Simplex\Core\ComponentBase',
+        'SFComBase' => 'Simplex\Core\ControllerBase',
         'SFModBase' => 'Simplex\Core\ModuleBase',
         'ComAction' => 'Simplex\Core\ControllerBase',
         'Notifier' => 'Simplex\Core\Alert\Site\Alert',
@@ -133,7 +134,10 @@ class UpFile
         $p = $this->getPlace();
         if ($p) {
             $relPath = dirname(str_replace("{$this->config->fromRoot}/{$p['oldBase']}/{$p['oldPlace']}", '', $this->path));
-            return rtrim("{$this->config->toRoot}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
+            $path = rtrim("{$this->config->toRoot}/{$p['newBase']}/{$p['newPlace']}$relPath", '/') . '/' . $this->findNewName();
+//            if(preg_match('@/(ext|plug)/[\w\d\_]+/models@'))
+            $path = str_replace('/models/', '/Models/', $path);
+            return $path;
         }
         return str_replace($this->config->fromRoot, $this->config->toRoot, $this->path);
     }
@@ -208,7 +212,6 @@ class UpFile
     {
         return $this->data;
     }
-
 
 
 }

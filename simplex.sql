@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.40, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: simplex3
+-- Host: et9.ru    Database: simplex
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -119,7 +119,7 @@ CREATE TABLE `component` (
   `name` varchar(255) NOT NULL,
   `params` longtext,
   PRIMARY KEY (`component_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `component` (
 
 LOCK TABLES `component` WRITE;
 /*!40000 ALTER TABLE `component` DISABLE KEYS */;
-INSERT INTO `component` VALUES (1,'Content','Материалы','a:2:{s:6:\"аег\";s:1:\"q\";s:6:\"groupp\";a:1:{s:4:\"jopa\";s:1:\"2\";}}');
+INSERT INTO `component` VALUES (1,'Content','Материалы','a:2:{s:6:\"аег\";s:1:\"q\";s:6:\"groupp\";a:1:{s:4:\"jopa\";s:1:\"2\";}}'),(2,'Auth','Авторизация',NULL);
 /*!40000 ALTER TABLE `component` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +273,7 @@ CREATE TABLE `log` (
   `browser` varchar(255) NOT NULL,
   `data` varchar(1000) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +282,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
-INSERT INTO `log` VALUES (1,'2017-10-04 06:31:28','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:50.0) Gecko/20100101 Firefox/50.0','Логин: dev'),(2,'2020-04-19 15:17:32','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0','Логин: dev'),(3,'2020-10-25 09:43:55','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(4,'2020-10-25 10:05:59','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(5,'2020-10-25 10:07:28','login_attempt','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(6,'2020-10-25 10:07:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(7,'2020-10-25 14:45:53','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(8,'2020-11-01 09:27:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev');
+INSERT INTO `log` VALUES (1,'2017-10-04 06:31:28','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:50.0) Gecko/20100101 Firefox/50.0','Логин: dev'),(2,'2020-04-19 15:17:32','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0','Логин: dev'),(3,'2020-10-25 09:43:55','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(4,'2020-10-25 10:05:59','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(5,'2020-10-25 10:07:28','login_attempt','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(6,'2020-10-25 10:07:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(7,'2020-10-25 14:45:53','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(8,'2020-11-01 09:27:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(9,'2020-11-01 12:42:31','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev');
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,7 +338,7 @@ CREATE TABLE `menu` (
   KEY `FK_menu_menu_menu_id` (`menu_pid`),
   CONSTRAINT `FK_menu_component_component_id` FOREIGN KEY (`component_id`) REFERENCES `component` (`component_id`) ON DELETE SET NULL,
   CONSTRAINT `FK_menu_menu_menu_id` FOREIGN KEY (`menu_pid`) REFERENCES `menu` (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1260;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1260;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +347,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,NULL,NULL,1,0,1,'Главная','/'),(2,NULL,NULL,1,0,2,'О компании','/company/'),(3,NULL,NULL,1,0,3,'Продукция','/catalog/'),(4,NULL,NULL,1,0,4,'Услуги','/services/'),(7,NULL,NULL,1,0,7,'Контакты','/contacts/');
+INSERT INTO `menu` VALUES (1,NULL,NULL,1,0,1,'Главная','/'),(2,NULL,NULL,1,0,2,'О компании','/company/'),(3,NULL,NULL,1,0,3,'Продукция','/catalog/'),(4,NULL,NULL,1,0,4,'Услуги','/services/'),(7,NULL,NULL,1,0,7,'Контакты','/contacts/'),(8,NULL,2,1,1,0,'Авторизация','/auth/');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,7 +374,7 @@ CREATE TABLE `module` (
 
 LOCK TABLES `module` WRITE;
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
-INSERT INTO `module` VALUES (1,'\\App\\Extensions\\Menu\\Menu','Меню','site',0),(2,'ModContent','Список материалов','site',0),(3,'\\App\\Extensions\\Breadcrumbs\\Breadcrumbs','Хлебные крошки','site',1),(4,'\\App\\Extensions\\Block\\Block','Текстовый блок','site',0),(7,'Breadcrumbs','Admin. Хлебные крошки','admin',0),(8,'Menu','Admin. Меню','admin',0),(9,'ModSlider','Слайдер','site',0),(10,'ModCallback','Обратный звонок','site',0),(11,'Account','Admin. Аккаунт','admin',0),(12,'Install','Admin. Репозиторий','admin',0),(13,'ModCode','Код','site',0);
+INSERT INTO `module` VALUES (1,'\\App\\Extensions\\Menu\\Menu','Меню','site',0),(2,'App\\Extensions\\Content\\ModuleContent','Список материалов','site',0),(3,'\\App\\Extensions\\Breadcrumbs\\Breadcrumbs','Хлебные крошки','site',1),(4,'\\App\\Extensions\\Block\\Block','Текстовый блок','site',0),(7,'Breadcrumbs','Admin. Хлебные крошки','admin',0),(8,'Menu','Admin. Меню','admin',0),(9,'App\\\\Var\\Www\\Newteam\\Extensions\\Slider\\ModuleSlider','Слайдер','site',0),(10,'App\\\\Var\\Www\\Newteam\\Extensions\\Callback\\ModuleCallback','Обратный звонок','site',0),(11,'Account','Admin. Аккаунт','admin',0),(12,'Install','Admin. Репозиторий','admin',0),(13,'App\\\\Var\\Www\\Newteam\\Extensions\\Code\\ModuleCode','Код','site',0);
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -778,7 +778,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,1,1,'dev','b8700830eb7bdd7a4823df4827f97c28','fb1a392b083e3121edd7c9046be62baa','f951a126dd095597e4f112dbf0c2ddc7','','',NULL),(2,2,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','e1c3403a66d1269c4e3edbae11c11f03','',NULL,'',NULL);
+INSERT INTO `user` VALUES (1,1,1,'dev','b8700830eb7bdd7a4823df4827f97c28','fb1a392b083e3121edd7c9046be62baa','22da1292a596ee685cb20faa435c3c8f','','',NULL),(2,2,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','e1c3403a66d1269c4e3edbae11c11f03','',NULL,'',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -937,4 +937,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-01 17:19:29
+-- Dump completed on 2020-11-08 19:06:16

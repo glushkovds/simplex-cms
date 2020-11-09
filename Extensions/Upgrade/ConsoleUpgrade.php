@@ -166,7 +166,8 @@ class ConsoleUpgrade extends ConsoleBase
         if (is_scalar($result)) {
             Alert::result($result, 'Success', 'Fail');
         } elseif (is_array($result)) {
-            Alert::warning("{$result['result']}: {$result['message']}");
+            $message = $result['message'] ?? '';
+            Alert::warning("{$result['result']}: $message");
         }
         if (!$result) {
             exit;

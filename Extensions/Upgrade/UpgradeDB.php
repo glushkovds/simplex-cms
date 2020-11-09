@@ -18,6 +18,21 @@ class UpgradeDB
     public function upgrade()
     {
         $this->upgradeModules();
+        $this->addAuthComponent();
+    }
+
+    public function addAuthComponent()
+    {
+        ConsoleUpgrade::job("Add auth component...", function () {
+            $db = $this->config->getNewDb();
+            if ($db->result($db->query("SELECT * FROM component WHERE class='Auth'"))) {
+                return ['result' => 'Skip'];
+            }
+            $success = $db->query("INSERT INTO component SET class='Auth', name='Авторизация'");
+            $componentId = $db->insertID();
+            $success &= $db->query("INSERT INTO menu SET component_id=$componentId, active=1, hidden=1, npp=0, name='Авторизация', link='/auth/'");
+            return $success;
+        });
     }
 
     public function upgradeConfig()

@@ -33,6 +33,8 @@ class UpFile
         'PlugSMS' => 'Simplex\Core\Sms',
         'Service' => 'Simplex\Core\Service',
         'PlugJQuery' => 'App\Plugins\Jquery\Jquery',
+        'Time' => 'Simplex\Core\Time',
+        'PlugTime' => 'Simplex\Core\Time',
     ];
 
     public function __construct($path, $config)
@@ -181,17 +183,20 @@ class UpFile
 
     protected function replaceClasses()
     {
-        foreach ($this->knownClasses as $from => $to) {
-            $this->replace($from, $to);
-        }
         $classes = static::findClassesInContent($this->newData['contents']);
         foreach ($classes as $class) {
-            $newClass = UpClass::upgradeClassName($class);
+            $newClass = $this->knownClasses[$class] ?? UpClass::upgradeClassName($class);
             if ($newClass) {
-//                ['fqn' => $fqn] = UpClass::classNameInfo($newClass);
-                $this->replace($class, $newClass);
+                $this->newData['contents'] = static::replaceClassInContent($this->newData['contents'], $class, $newClass);
             }
         }
+    }
+
+    protected static function replaceClassInContent($content, $old, $new)
+    {
+        $content = preg_replace('@' . $old . '::@', "$new::", $content);
+        $content = preg_replace('@new ' . $old . '@', "new $new", $content);
+        return $content;
     }
 
     protected static function findClassesInContent($content)

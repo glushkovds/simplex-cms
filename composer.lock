@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-admin.git",
-                "reference": "88d970894bd1d5515a2597c7698fd71c348af1ff"
+                "reference": "6b3334193e626cf1c37f69d63cd4c614f1d3034e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/88d970894bd1d5515a2597c7698fd71c348af1ff",
-                "reference": "88d970894bd1d5515a2597c7698fd71c348af1ff",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/6b3334193e626cf1c37f69d63cd4c614f1d3034e",
+                "reference": "6b3334193e626cf1c37f69d63cd4c614f1d3034e",
                 "shasum": ""
             },
             "require": {
@@ -25,6 +25,7 @@
                 "glushkovds/simplex-core": "*",
                 "php": ">=7.1.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -49,7 +50,11 @@
                 "simplex-admin",
                 "simplex-cms"
             ],
-            "time": "2020-11-01T11:44:11+00:00"
+            "support": {
+                "issues": "https://github.com/glushkovds/simplex-admin/issues",
+                "source": "https://github.com/glushkovds/simplex-admin/tree/main"
+            },
+            "time": "2021-02-06T12:34:11+00:00"
         },
         {
             "name": "glushkovds/simplex-core",
@@ -57,18 +62,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "b5f2e880a90b1f954578163dd91adf77b6f9f94f"
+                "reference": "c8744ad6a8b393746ebc95832c9e6d0a6e811e78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/b5f2e880a90b1f954578163dd91adf77b6f9f94f",
-                "reference": "b5f2e880a90b1f954578163dd91adf77b6f9f94f",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/c8744ad6a8b393746ebc95832c9e6d0a6e811e78",
+                "reference": "c8744ad6a8b393746ebc95832c9e6d0a6e811e78",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
+                "ext-json": "*",
+                "ext-pdo": "*",
                 "php": ">=7.1.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -93,7 +101,11 @@
                 "simplex-cms",
                 "simplex-core"
             ],
-            "time": "2020-11-08T12:44:19+00:00"
+            "support": {
+                "issues": "https://github.com/glushkovds/simplex-core/issues",
+                "source": "https://github.com/glushkovds/simplex-core/tree/main"
+            },
+            "time": "2021-07-01T07:46:39+00:00"
         }
     ],
     "packages-dev": [],
@@ -106,5 +118,6 @@
         "php": ">=7.1.0",
         "ext-gd": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

@@ -37,7 +37,13 @@ if (count($job) !== 2) {
     echo "Error!! example usage: php console.php ext/action\nOR: ./sf ext/action\n";
     exit;
 }
-$class = 'App\Extensions\\' . ucfirst($job[0]) . '\Console' . ucfirst($job[0]);
+
+if (strtolower($job[0]) == 'migrate') {
+    $class = 'Simplex\Core\DB\Migrator';
+} else {
+    $class = 'App\Extensions\\' . ucfirst($job[0]) . '\Console' . ucfirst($job[0]);
+}
+
 $action = $job[1];
 if (!class_exists($class)) {
     sfCliExit(1, "class $class not found");
@@ -57,6 +63,11 @@ if ($actionParams = $reflection->getParameters()) {
             $paramName = $actionParam->getName();
             if (array_key_exists($paramName, $_GET)) {
                 $paramValues[$actionParam->getPosition()] = $_GET[$paramName];
+            } else {
+                try {
+                    $default = $actionParam->getDefaultValue();
+                    $paramValues[$actionParam->getPosition()] = $default;
+                } catch (\Throwable $ex) {}
             }
         }
     }

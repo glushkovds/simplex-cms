@@ -352,6 +352,20 @@ INSERT INTO `menu` VALUES (1,NULL,NULL,1,0,1,'Главная','/'),(2,NULL,NULL,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `migration`
+--
+
+DROP TABLE IF EXISTS `migration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migration` (
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          `file` varchar(255) NOT NULL,
+                          PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2730;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `module`
 --
 
@@ -803,7 +817,7 @@ CREATE TABLE `user_auth` (
   KEY `user_auth_time_last_login_index` (`time_last_login`),
   KEY `user_auth_token_time_expires_index` (`token`,`time_expires`),
   CONSTRAINT `user_auth_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -858,7 +872,7 @@ CREATE TABLE `user_priv_personal` (
   KEY `FK_user_role_priv_user_role_role_id2` (`user_id`),
   CONSTRAINT `FK_user_role_priv_user_priv_priv_id2` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`),
   CONSTRAINT `FK_user_role_priv_user_role_role_id2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

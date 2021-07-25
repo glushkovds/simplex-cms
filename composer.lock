@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e09d6f898dad912669bb54acad7c0d12",
+    "content-hash": "0bfd0edca640c4df4246610f2b68f393",
     "packages": [
         {
             "name": "glushkovds/simplex-admin",
@@ -12,16 +12,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-admin.git",
-                "reference": "6b3334193e626cf1c37f69d63cd4c614f1d3034e"
+                "reference": "824d49eaef3ea8008973aa8e5fffce9741a32037"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/6b3334193e626cf1c37f69d63cd4c614f1d3034e",
-                "reference": "6b3334193e626cf1c37f69d63cd4c614f1d3034e",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/824d49eaef3ea8008973aa8e5fffce9741a32037",
+                "reference": "824d49eaef3ea8008973aa8e5fffce9741a32037",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
+                "glushkovds/simplex-auth": "*",
                 "glushkovds/simplex-core": "*",
                 "php": ">=7.1.0"
             },
@@ -54,7 +55,60 @@
                 "issues": "https://github.com/glushkovds/simplex-admin/issues",
                 "source": "https://github.com/glushkovds/simplex-admin/tree/main"
             },
-            "time": "2021-02-06T12:34:11+00:00"
+            "time": "2021-08-29T17:13:56+00:00"
+        },
+        {
+            "name": "glushkovds/simplex-auth",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/glushkovds/simplex-auth.git",
+                "reference": "9d179ad033ba84224ebbdab3044a27425c970667"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/glushkovds/simplex-auth/zipball/9d179ad033ba84224ebbdab3044a27425c970667",
+                "reference": "9d179ad033ba84224ebbdab3044a27425c970667",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "glushkovds/simplex-core": "*",
+                "php": ">=7.1.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Simplex\\Auth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Glushkov",
+                    "email": "amkarovec@gmail.com",
+                    "homepage": "https://github.com/glushkovds"
+                }
+            ],
+            "description": "Auth component for Simplex CMS",
+            "homepage": "https://github.com/glushkovds/simplex-auth",
+            "keywords": [
+                "php",
+                "simplex-auth",
+                "simplex-cms",
+                "simplex-core"
+            ],
+            "support": {
+                "issues": "https://github.com/glushkovds/simplex-auth/issues",
+                "source": "https://github.com/glushkovds/simplex-auth/tree/main"
+            },
+            "time": "2021-08-29T17:02:27+00:00"
         },
         {
             "name": "glushkovds/simplex-core",
@@ -62,12 +116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "c8744ad6a8b393746ebc95832c9e6d0a6e811e78"
+                "reference": "d1ac590eea4ed55acb1e79ca47418dc7fa422aaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/c8744ad6a8b393746ebc95832c9e6d0a6e811e78",
-                "reference": "c8744ad6a8b393746ebc95832c9e6d0a6e811e78",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/d1ac590eea4ed55acb1e79ca47418dc7fa422aaf",
+                "reference": "d1ac590eea4ed55acb1e79ca47418dc7fa422aaf",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +159,7 @@
                 "issues": "https://github.com/glushkovds/simplex-core/issues",
                 "source": "https://github.com/glushkovds/simplex-core/tree/main"
             },
-            "time": "2021-07-01T07:46:39+00:00"
+            "time": "2021-08-29T16:45:27+00:00"
         }
     ],
     "packages-dev": [],
@@ -119,5 +173,5 @@
         "ext-gd": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

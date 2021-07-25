@@ -20,6 +20,7 @@
     "php": ">=7.1.0",
     "ext-gd": "*",
     "glushkovds/simplex-core": "*",
+    "glushkovds/simplex-auth": "*",
     "glushkovds/simplex-admin": "*"
   },
   "require-dev": {

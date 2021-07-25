@@ -15,3 +15,4 @@ RUN apt-get install -y \
 
 # Install required modules
 RUN docker-php-ext-install pdo pdo_mysql mysqli mbstring exif pcntl bcmath gd
+RUN a2enmod rewrite

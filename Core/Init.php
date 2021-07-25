@@ -28,13 +28,24 @@ class Init
 
         // TODO Lazy connect
         \Simplex\Core\DB::connect();
+        static::auth();
 
-        $type = SF_LOCATION_ADMIN == SF_LOCATION ? 'admin' : 'site';
-        \Simplex\Core\User::login($type);
         \Simplex\Core\Container::getCore()::init();
         \Simplex\Core\Container::getPage()::init();
 
         return \Simplex\Core\Container::getCore();
+    }
+
+    protected static function auth()
+    {
+        \Simplex\Auth\Bootstrap::authByMiddlewareChain((new \Simplex\Auth\Auth\Chain([
+            new \Simplex\Auth\Auth\SessionMiddleware(),
+            new \Simplex\Auth\Auth\CookieMiddleware(),
+            new \Simplex\Auth\Auth\BasicAuthMiddleware(),
+        ]))
+        // You can change base user model for auth
+//            ->setUserModelClass(YourUser::class)
+        );
     }
 
     public static function loadConstants()

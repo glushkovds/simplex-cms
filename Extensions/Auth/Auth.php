@@ -4,41 +4,45 @@
 namespace App\Extensions\Auth;
 
 
+use Simplex\Auth\Bootstrap;
+use Simplex\Auth\CookieTokenBag;
+use Simplex\Auth\Models\UserAuth;
+use Simplex\Auth\SessionStorage;
+use Simplex\Core\Container;
 use Simplex\Core\ControllerBase;
 use Simplex\Core\DB;
+use Simplex\Core\Models\User;
 
 class Auth extends ControllerBase
 {
+
+    const REMEMBER_ME_INTERVAL = '1 WEEK';
 
     public function login()
     {
         $login = $_REQUEST['login'];
         $password = $_REQUEST['password'];
         $redirect = $_REQUEST['r'] ?? '/';
+        $isRemember = !empty($_REQUEST['remember']);
         if (strpos($redirect, '//') !== false) {
             $redirect = '/';
         }
         if (preg_match('@^[0-9a-z\@\-\.]+$@i', $login)) {
-            DB::bind(array('USER_LOGIN' => strtolower($login)));
-            $q = "SELECT u.user_id, u.role_id, u.login, u.password
+            $q = "SELECT u.*
                     FROM user u
                     JOIN user_role r ON r.role_id=u.role_id
-                    WHERE login=@USER_LOGIN
+                    WHERE login=:login
                       AND u.active=1
                       AND r.active=1";
-            if ($row = DB::result($q)) {
+            $row = DB::result($q, '', ['login' => strtolower($login)]);
+            if ($row) {
                 if (md5($password) === $row['password']) {
-                    $hash = md5(rand(0, 999) . microtime());
-                    $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['user_hash'] = $hash;
-
-                    DB::bind(array('USER_ID' => $row['user_id'], 'USER_HASH' => $hash));
-                    $q = "UPDATE user SET hash = @USER_HASH WHERE user_id=@USER_ID";
-                    DB::query($q);
-
-                    if (isset($_POST['login']['remember']) && $row['role_id'] != 5) {
-                        setcookie("ch", md5($row['user_id']), time() + 60 * 60 * 24 * 3, "/");
-                        setcookie("cs", $hash, time() + 60 * 60 * 24 * 3, "/");
+                    SessionStorage::set($row['user_id']);
+                    Bootstrap::authByUser((new User())->fill($row));
+                    if ($isRemember) {
+                        $auth = UserAuth::create($row['user_id'], static::REMEMBER_ME_INTERVAL);
+                        $cookies = new CookieTokenBag(CookieTokenBag::defaultPrefix());
+                        $cookies->set($auth->token, new \DateTime(static::REMEMBER_ME_INTERVAL));
                     }
                 }
             }
@@ -53,12 +57,17 @@ class Auth extends ControllerBase
         if (strpos($redirect, '//') !== false) {
             $redirect = '/';
         }
-        unset($_SESSION['user_id']);
-        unset($_SESSION['user_hash']);
-        setcookie("ch", '', 0, "/");
-        setcookie("cs", '', 0, "/");
+        Bootstrap::signOut();
         header("Location: $redirect");
         exit;
+    }
+
+    public function test()
+    {
+        if (Container::getUser()) {
+            print_r(Container::getUser()->toArray());
+        }
+        var_dump(Container::getUserLegacy()::$id);
     }
 
 }

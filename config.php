@@ -4,9 +4,9 @@ class Config extends \Simplex\Core\Config
 {
 
     public static $db_type = 'mysql';
-    public static $db_host = '127.0.0.1';
+    public static $db_host = 'db';
     public static $db_user = 'simplex';
-    public static $db_pass = '123';
+    public static $db_pass = 'simplex';
     public static $db_name = 'simplex';
     public static $component_default = '\App\Extensions\Content\Content';
     public static $theme = 'default';

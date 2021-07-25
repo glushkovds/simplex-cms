@@ -9,7 +9,7 @@ services:
       - ./:/var/www/html
       - /var/www:/var/www
     ports:
-      - "380:80"
+      - "480:80"
 
   db:
     restart: always

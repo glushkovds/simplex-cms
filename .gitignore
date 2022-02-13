@@ -2,3 +2,4 @@
 /uf
 vendor
 docker/data
+.env

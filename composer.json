@@ -21,7 +21,8 @@
     "ext-gd": "*",
     "glushkovds/simplex-core": "*",
     "glushkovds/simplex-auth": "*",
-    "glushkovds/simplex-admin": "*"
+    "glushkovds/simplex-admin": "*",
+    "vlucas/phpdotenv": "^5.4"
   },
   "require-dev": {
   },

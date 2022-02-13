@@ -10,13 +10,13 @@ class Init
     {
         static::setTimezone();
         require_once SF_ROOT_PATH . '/vendor/autoload.php';
+        static::loadEnv();
+        require_once SF_ROOT_PATH . '/functions.php';
         static::setSessionParams();
         static::startDebug();
         static::startSession();
         static::setCharset();
-
-        require_once SF_ROOT_PATH . '/config.php';
-        \Simplex\Core\Container::set('config', new Config());
+        static::loadConfig();
 
         if (SF_LOCATION_ADMIN == SF_LOCATION) {
             \Simplex\Core\Container::set('page', new \Simplex\Admin\Page());
@@ -30,10 +30,25 @@ class Init
         \Simplex\Core\DB::connect();
         static::auth();
 
-        \Simplex\Core\Container::getCore()::init();
-        \Simplex\Core\Container::getPage()::init();
+        if (SF_LOCATION != SF_LOCATION_CLI) {
+            \Simplex\Core\Container::getCore()::init();
+            \Simplex\Core\Container::getPage()::init();
+        }
 
         return \Simplex\Core\Container::getCore();
+    }
+
+    protected static function loadConfig()
+    {
+        require_once SF_ROOT_PATH . '/config.php';
+        Config::load();
+        \Simplex\Core\Container::set('config', new Config());
+    }
+
+    protected static function loadEnv()
+    {
+        $dotenv = Dotenv\Dotenv::createImmutable(SF_ROOT_PATH);
+        $dotenv->safeLoad();
     }
 
     protected static function auth()

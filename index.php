@@ -3,7 +3,7 @@
 require_once 'Core/Init.php';
 
 Init::loadConstants();
-define('SF_LOCATION', SF_LOCATION_SITE);
+const SF_LOCATION = SF_LOCATION_SITE;
 
 Init::_();
 

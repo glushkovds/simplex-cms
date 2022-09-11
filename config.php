@@ -19,6 +19,12 @@ class Config extends \Simplex\Core\Config
     public static $logLevel = 'debug';
     public static $logPath = '/var/log';
 
+    /**
+     * @example if (extension_loaded('pdo')) static::$mysqlErrorMode = PDO::ERRMODE_EXCEPTION;
+     * @var int
+     */
+    public static $mysqlErrorMode = 0;
+
     public static function load()
     {
         static::$db_host = env('DB_HOST', 'db');

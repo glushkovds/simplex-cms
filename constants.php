@@ -1,3 +1,3 @@
 <?php
 
-define('SF_ROOT_PATH', __DIR__);
+const SF_ROOT_PATH = __DIR__;

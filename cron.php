@@ -23,10 +23,10 @@ if (empty($_SERVER['DOCUMENT_ROOT'])) {
 
 require_once 'Core/Init.php';
 
-\App\Core\Init::loadConstants();
-define('SF_LOCATION', SF_LOCATION_CLI);
+Init::loadConstants();
+const SF_LOCATION = SF_LOCATION_CLI;
 
-\App\Core\Init::_();
+Init::_();
 
 cliParamsToGET();
 

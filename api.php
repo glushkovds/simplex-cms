@@ -1,9 +1,9 @@
 <?php
 
-define('SF_INADMIN', false);
-define('SF_INSITE', false);
-define('SF_INCRON', false);
-define('SF_INAPI', true);
+const SF_INADMIN = false;
+const SF_INSITE = false;
+const SF_INCRON = false;
+const SF_INAPI = true;
 
 $m0 = memory_get_usage();
 

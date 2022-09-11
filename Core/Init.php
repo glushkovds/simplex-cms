@@ -21,14 +21,12 @@ class Init
         if (SF_LOCATION_ADMIN == SF_LOCATION) {
             \Simplex\Core\Container::set('page', new \Simplex\Admin\Page());
             \Simplex\Core\Container::set('core', \Simplex\Admin\Core::class);
-        } else {
+        } elseif (SF_LOCATION_API == SF_LOCATION || SF_LOCATION_SITE == SF_LOCATION) {
             \Simplex\Core\Container::set('page', new \Simplex\Core\Page());
             \Simplex\Core\Container::set('core', \Simplex\Core\Core::class);
         }
 
-        // TODO Lazy connect
-        \Simplex\Core\DB::connect();
-        static::auth();
+        static::setAuthHandler();
 
         if (SF_LOCATION != SF_LOCATION_CLI) {
             \Simplex\Core\Container::getCore()::init();
@@ -51,16 +49,18 @@ class Init
         $dotenv->safeLoad();
     }
 
-    protected static function auth()
+    protected static function setAuthHandler()
     {
-        \Simplex\Auth\Bootstrap::authByMiddlewareChain((new \Simplex\Auth\Auth\Chain([
-            new \Simplex\Auth\Auth\SessionMiddleware(),
-            new \Simplex\Auth\Auth\CookieMiddleware(),
-            new \Simplex\Auth\Auth\BasicAuthMiddleware(),
-        ]))
-        // You can change base user model for auth
+        \Simplex\Core\Container::setAuthHandler(function () {
+            \Simplex\Auth\Bootstrap::authByMiddlewareChain((new \Simplex\Auth\Auth\Chain([
+                new \Simplex\Auth\Auth\SessionMiddleware(),
+                new \Simplex\Auth\Auth\CookieMiddleware(),
+                new \Simplex\Auth\Auth\BasicAuthMiddleware(),
+            ]))
+            // You can change base user model for auth
 //            ->setUserModelClass(YourUser::class)
-        );
+            );
+        });
     }
 
     public static function loadConstants()

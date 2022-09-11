@@ -26,7 +26,7 @@ if (empty($_SERVER['DOCUMENT_ROOT'])) {
 require_once 'Core/Init.php';
 
 Init::loadConstants();
-define('SF_LOCATION', SF_LOCATION_CLI);
+const SF_LOCATION = SF_LOCATION_CLI;
 
 Init::_();
 
@@ -78,11 +78,11 @@ if ($actionParams = $reflection->getParameters()) {
 $handler->$action(...$paramValues);
 
 
-function cliParamsToGET()
+function cliParamsToGET(): array
 {
     global $argc, $argv;
     if ($argc == 1) {
-        return;
+        return [];
     }
     $sfArgv = array_slice($argv, 2);
     foreach ($sfArgv as $index => $arg) {

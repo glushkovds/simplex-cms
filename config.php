@@ -32,4 +32,6 @@ class Config extends \Simplex\Core\Config
         static::$db_pass = env('DB_PASS', 'simplex');
         static::$db_name = env('DB_NAME', 'simplex');
     }
+
+    public static $routesFile = SF_ROOT_PATH . '/routes.php';
 }

@@ -116,12 +116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "2a4fe2c4fd3485a78321841d5a2c08ea5f1be879"
+                "reference": "bc7e966295df8aa12e5a450fec3bc40e2eb9278f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/2a4fe2c4fd3485a78321841d5a2c08ea5f1be879",
-                "reference": "2a4fe2c4fd3485a78321841d5a2c08ea5f1be879",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/bc7e966295df8aa12e5a450fec3bc40e2eb9278f",
+                "reference": "bc7e966295df8aa12e5a450fec3bc40e2eb9278f",
                 "shasum": ""
             },
             "require": {
@@ -159,7 +159,7 @@
                 "issues": "https://github.com/glushkovds/simplex-core/issues",
                 "source": "https://github.com/glushkovds/simplex-core/tree/main"
             },
-            "time": "2022-09-11T15:31:39+00:00"
+            "time": "2022-10-09T09:48:19+00:00"
         },
         {
             "name": "graham-campbell/result-type",

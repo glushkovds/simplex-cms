@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.6.40, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.30, for Linux (x86_64)
 --
--- Host: et9.ru    Database: simplex
+-- Host: 127.0.0.1    Database: simplex
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	8.0.30
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `admin_menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin_menu` (
   `menu_id` int NOT NULL AUTO_INCREMENT,
   `menu_pid` int DEFAULT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `admin_menu` (
   KEY `FK_admin_menu_user_priv_priv_id` (`priv_id`),
   CONSTRAINT `FK_admin_menu_admin_menu_menu_id` FOREIGN KEY (`menu_pid`) REFERENCES `admin_menu` (`menu_id`),
   CONSTRAINT `FK_admin_menu_user_priv_priv_id` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=910;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=910;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +56,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `admin_widget`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin_widget` (
   `widget_id` int NOT NULL AUTO_INCREMENT,
   `active` int NOT NULL DEFAULT '1',
@@ -68,7 +68,7 @@ CREATE TABLE `admin_widget` (
   PRIMARY KEY (`widget_id`),
   KEY `FK_admin_widget_user_priv_priv_id` (`priv_id`),
   CONSTRAINT `FK_admin_widget_user_priv_priv_id` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `callback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `callback` (
   `callback_id` int NOT NULL AUTO_INCREMENT,
   `phone` varchar(255) NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `callback` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comments` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`callback_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,14 +112,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `component`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `component` (
   `component_id` int NOT NULL AUTO_INCREMENT,
   `class` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `params` longtext,
   PRIMARY KEY (`component_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=4096;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `component` (
 
 LOCK TABLES `component` WRITE;
 /*!40000 ALTER TABLE `component` DISABLE KEYS */;
-INSERT INTO `component` VALUES (1,'Content','Материалы','a:2:{s:6:\"аег\";s:1:\"q\";s:6:\"groupp\";a:1:{s:4:\"jopa\";s:1:\"2\";}}'),(2,'Auth','Авторизация',NULL);
+INSERT INTO `component` VALUES (1,'\\App\\Extensions\\Content\\Content','Материалы','a:2:{s:6:\"аег\";s:1:\"q\";s:6:\"groupp\";a:1:{s:4:\"jopa\";s:1:\"2\";}}'),(2,'\\App\\Extensions\\Auth\\Auth','Авторизация',NULL);
 /*!40000 ALTER TABLE `component` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +138,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `component_param`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `component_param` (
   `cp_id` int NOT NULL AUTO_INCREMENT,
   `component_id` int NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `component_param` (
   CONSTRAINT `FK_component_param_component_component_id` FOREIGN KEY (`component_id`) REFERENCES `component` (`component_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_component_param_component_param_mp_id` FOREIGN KEY (`param_pid`) REFERENCES `component_param` (`cp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_component_param_struct_field_field_id` FOREIGN KEY (`field_id`) REFERENCES `struct_field` (`field_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `content`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `content` (
   `content_id` int NOT NULL AUTO_INCREMENT,
   `pid` int DEFAULT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE `content` (
   `file` varchar(255) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`content_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1638;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=1638;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cron`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cron` (
   `id` int NOT NULL AUTO_INCREMENT,
   `active` int NOT NULL DEFAULT '1',
@@ -221,7 +221,7 @@ CREATE TABLE `cron` (
   `action` varchar(255) NOT NULL,
   `cparams` varchar(1023) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,14 +239,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cron_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cron_log` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cron_id` int NOT NULL,
   `datetime` datetime NOT NULL,
   `result` varchar(2047) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=39;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=39;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `log` (
   `log_id` int NOT NULL AUTO_INCREMENT,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -273,7 +273,7 @@ CREATE TABLE `log` (
   `browser` varchar(255) NOT NULL,
   `data` varchar(1000) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +292,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `mail_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mail_log` (
   `log_id` int NOT NULL AUTO_INCREMENT,
   `success` int NOT NULL COMMENT '1 - отправлено, 0 - не отправлено, ошибки при отправке',
@@ -305,7 +305,7 @@ CREATE TABLE `mail_log` (
   `reply_to` varchar(255) DEFAULT NULL,
   `transport` int NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +323,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `menu` (
   `menu_id` int NOT NULL AUTO_INCREMENT,
   `menu_pid` int DEFAULT NULL,
@@ -338,7 +338,7 @@ CREATE TABLE `menu` (
   KEY `FK_menu_menu_menu_id` (`menu_pid`),
   CONSTRAINT `FK_menu_component_component_id` FOREIGN KEY (`component_id`) REFERENCES `component` (`component_id`) ON DELETE SET NULL,
   CONSTRAINT `FK_menu_menu_menu_id` FOREIGN KEY (`menu_pid`) REFERENCES `menu` (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1260;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=1260;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -357,13 +357,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `migration`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migration` (
-                          `id` int NOT NULL AUTO_INCREMENT,
-                          `file` varchar(255) NOT NULL,
-                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2730;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `file` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=2730;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migration`
+--
+
+LOCK TABLES `migration` WRITE;
+/*!40000 ALTER TABLE `migration` DISABLE KEYS */;
+/*!40000 ALTER TABLE `migration` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `module`
@@ -371,7 +380,7 @@ CREATE TABLE `migration` (
 
 DROP TABLE IF EXISTS `module`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `module` (
   `module_id` int NOT NULL AUTO_INCREMENT,
   `class` varchar(255) NOT NULL,
@@ -379,7 +388,7 @@ CREATE TABLE `module` (
   `type` enum('site','admin') NOT NULL DEFAULT 'site',
   `postexec` int NOT NULL DEFAULT '0' COMMENT 'Выполнять после контента',
   PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2730;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=2730;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +407,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `module_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `module_item` (
   `item_id` int NOT NULL AUTO_INCREMENT,
   `module_id` int NOT NULL,
@@ -412,7 +421,7 @@ CREATE TABLE `module_item` (
   KEY `FK_module_item_position_position_id` (`posname`),
   KEY `FK_module_item_module_module_id` (`module_id`),
   CONSTRAINT `FK_module_item_module_module_id` FOREIGN KEY (`module_id`) REFERENCES `module` (`module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1489;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=1489;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -431,7 +440,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `module_param`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `module_param` (
   `mp_id` int NOT NULL AUTO_INCREMENT,
   `module_id` int NOT NULL,
@@ -450,7 +459,7 @@ CREATE TABLE `module_param` (
   CONSTRAINT `FK_module_param_module_module_id` FOREIGN KEY (`module_id`) REFERENCES `module` (`module_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_module_param_module_param_mp_id` FOREIGN KEY (`param_pid`) REFERENCES `module_param` (`mp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_module_param_struct_field_field_id` FOREIGN KEY (`field_id`) REFERENCES `struct_field` (`field_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=819;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=819;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,14 +478,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `plug_cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plug_cache` (
   `cache_key` char(255) NOT NULL,
   `time_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `value` varchar(21000) DEFAULT NULL,
   `expires` int DEFAULT '3600' COMMENT 'В секундах',
   PRIMARY KEY (`cache_key`) USING BTREE
-) ENGINE=MEMORY DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=63776;
+) ENGINE=MEMORY DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=63776;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,7 +503,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `seo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seo` (
   `seo_id` int NOT NULL AUTO_INCREMENT,
   `seo_pid` int DEFAULT NULL,
@@ -506,7 +515,7 @@ CREATE TABLE `seo` (
   PRIMARY KEY (`seo_id`),
   KEY `FK_seo_seo_seo_id` (`seo_pid`),
   CONSTRAINT `FK_seo_seo_seo_id` FOREIGN KEY (`seo_pid`) REFERENCES `seo` (`seo_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -525,7 +534,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `settings` (
   `setting_id` int NOT NULL AUTO_INCREMENT,
   `npp` int NOT NULL DEFAULT '0',
@@ -535,7 +544,7 @@ CREATE TABLE `settings` (
   `type` enum('int','string','bool','enum') NOT NULL DEFAULT 'string',
   `enum_values` varchar(255) DEFAULT NULL COMMENT 'key::value;;key::value',
   PRIMARY KEY (`setting_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=3276;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=3276;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -554,7 +563,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `slider`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `slider` (
   `slide_id` int NOT NULL AUTO_INCREMENT,
   `npp` int NOT NULL,
@@ -563,7 +572,7 @@ CREATE TABLE `slider` (
   `photo` varchar(255) NOT NULL,
   `href` varchar(1023) NOT NULL,
   PRIMARY KEY (`slide_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=16384;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=16384;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -581,7 +590,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `struct_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `struct_data` (
   `id` int NOT NULL AUTO_INCREMENT,
   `npp` int NOT NULL DEFAULT '0',
@@ -597,7 +606,7 @@ CREATE TABLE `struct_data` (
   KEY `FK_struct_data_struct_field_field_id` (`field_id`),
   CONSTRAINT `FK_struct_data_struct_field_field_id` FOREIGN KEY (`field_id`) REFERENCES `struct_field` (`field_id`),
   CONSTRAINT `FK_struct_data_struct_table_table_id` FOREIGN KEY (`table_id`) REFERENCES `struct_table` (`table_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=805;
+) ENGINE=InnoDB AUTO_INCREMENT=319 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=805;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -616,13 +625,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `struct_field`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `struct_field` (
   `field_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `class` varchar(50) NOT NULL,
   PRIMARY KEY (`field_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1489;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=1489;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -641,7 +650,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `struct_field_param`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `struct_field_param` (
   `fp_id` int NOT NULL AUTO_INCREMENT,
   `field_id` int NOT NULL,
@@ -655,7 +664,7 @@ CREATE TABLE `struct_field_param` (
   KEY `FK_struct_field_param_struct_field_field_id2` (`type_id`),
   CONSTRAINT `FK_struct_field_param_struct_field_field_id` FOREIGN KEY (`field_id`) REFERENCES `struct_field` (`field_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_struct_field_param_struct_field_field_id2` FOREIGN KEY (`type_id`) REFERENCES `struct_field` (`field_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=655;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=655;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -674,7 +683,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `struct_param`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `struct_param` (
   `param_id` int NOT NULL AUTO_INCREMENT,
   `param_pid` int DEFAULT NULL,
@@ -692,7 +701,7 @@ CREATE TABLE `struct_param` (
   CONSTRAINT `FK_struct_param_struct_field_field_id` FOREIGN KEY (`field_id`) REFERENCES `struct_field` (`field_id`),
   CONSTRAINT `FK_struct_param_struct_param_param_id` FOREIGN KEY (`param_pid`) REFERENCES `struct_param` (`param_id`),
   CONSTRAINT `FK_struct_param_struct_table_table_id` FOREIGN KEY (`table_id`) REFERENCES `struct_table` (`table_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1820;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=1820;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -711,7 +720,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `struct_table`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `struct_table` (
   `table_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -722,7 +731,7 @@ CREATE TABLE `struct_table` (
   `priv_delete` int DEFAULT NULL COMMENT 'Привелегия, которая позволяет удалять строки из таблицы',
   PRIMARY KEY (`table_id`),
   UNIQUE KEY `UK_struct_table_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=1365;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=1365;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -741,14 +750,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `struct_table_right`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `struct_table_right` (
   `table_id` int NOT NULL,
   `role_id` int NOT NULL,
   `can_add` int NOT NULL,
   `can_edit` int NOT NULL,
   `can_delete` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Права пользователей на таблицу';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Права пользователей на таблицу';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -766,7 +775,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
   `role_id` int NOT NULL DEFAULT '3',
@@ -783,7 +792,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `email` (`email`),
   KEY `FK_user_user_role_role_id` (`role_id`),
   CONSTRAINT `FK_user_user_role_role_id` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=8192;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=8192;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -802,7 +811,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_auth`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_auth` (
   `auth_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -817,7 +826,7 @@ CREATE TABLE `user_auth` (
   KEY `user_auth_time_last_login_index` (`time_last_login`),
   KEY `user_auth_token_time_expires_index` (`token`,`time_expires`),
   CONSTRAINT `user_auth_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -835,7 +844,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_priv`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_priv` (
   `priv_id` int NOT NULL AUTO_INCREMENT,
   `active` int NOT NULL DEFAULT '0',
@@ -843,7 +852,7 @@ CREATE TABLE `user_priv` (
   `name` varchar(255) NOT NULL,
   `comment` varchar(255) NOT NULL,
   PRIMARY KEY (`priv_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=4096;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=4096;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -862,7 +871,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_priv_personal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_priv_personal` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
@@ -872,7 +881,7 @@ CREATE TABLE `user_priv_personal` (
   KEY `FK_user_role_priv_user_role_role_id2` (`user_id`),
   CONSTRAINT `FK_user_role_priv_user_priv_priv_id2` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`),
   CONSTRAINT `FK_user_role_priv_user_role_role_id2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -890,7 +899,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_role` (
   `role_id` int NOT NULL AUTO_INCREMENT,
   `priv_id` int NOT NULL,
@@ -900,7 +909,7 @@ CREATE TABLE `user_role` (
   PRIMARY KEY (`role_id`),
   KEY `FK_user_role_user_priv_priv_id` (`priv_id`),
   CONSTRAINT `FK_user_role_user_priv_priv_id` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=5461;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=5461;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -919,7 +928,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_role_priv`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_role_priv` (
   `id` int NOT NULL AUTO_INCREMENT,
   `role_id` int DEFAULT NULL,
@@ -929,7 +938,7 @@ CREATE TABLE `user_role_priv` (
   KEY `FK_user_role_priv_user_role_role_id` (`role_id`),
   CONSTRAINT `FK_user_role_priv_user_priv_priv_id` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`),
   CONSTRAINT `FK_user_role_priv_user_role_role_id` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=2340;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=2340;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -951,4 +960,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-08 19:06:16
+-- Dump completed on 2022-10-16 13:44:40

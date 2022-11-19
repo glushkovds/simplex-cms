@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: simplex
 -- ------------------------------------------------------
@@ -273,7 +273,7 @@ CREATE TABLE `log` (
   `browser` varchar(255) NOT NULL,
   `data` varchar(1000) NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3 AVG_ROW_LENGTH=5461 COMMENT='Журнал входов в админку. По умолчанию отключен. Включать в AdminPlugLog';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +282,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
-INSERT INTO `log` VALUES (1,'2017-10-04 06:31:28','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:50.0) Gecko/20100101 Firefox/50.0','Логин: dev'),(2,'2020-04-19 15:17:32','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0','Логин: dev'),(3,'2020-10-25 09:43:55','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(4,'2020-10-25 10:05:59','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(5,'2020-10-25 10:07:28','login_attempt','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(6,'2020-10-25 10:07:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(7,'2020-10-25 14:45:53','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(8,'2020-11-01 09:27:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(9,'2020-11-01 12:42:31','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev');
+INSERT INTO `log` VALUES (1,'2017-10-04 06:31:28','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:50.0) Gecko/20100101 Firefox/50.0','Логин: dev'),(2,'2020-04-19 15:17:32','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0','Логин: dev'),(3,'2020-10-25 09:43:55','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(4,'2020-10-25 10:05:59','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(5,'2020-10-25 10:07:28','login_attempt','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(6,'2020-10-25 10:07:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(7,'2020-10-25 14:45:53','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(8,'2020-11-01 09:27:39','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(9,'2020-11-01 12:42:31','login_success','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0','Логин: dev'),(10,'2022-11-19 08:12:58','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(11,'2022-11-19 08:13:24','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(12,'2022-11-19 08:14:15','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(13,'2022-11-19 08:15:19','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(14,'2022-11-19 08:15:28','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(15,'2022-11-19 08:15:37','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(16,'2022-11-19 08:15:57','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(17,'2022-11-19 08:16:48','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(18,'2022-11-19 08:17:05','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(19,'2022-11-19 08:17:14','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(20,'2022-11-19 08:17:21','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(21,'2022-11-19 08:17:36','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(22,'2022-11-19 08:17:48','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(23,'2022-11-19 08:17:55','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(24,'2022-11-19 08:18:05','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(25,'2022-11-19 08:18:12','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(26,'2022-11-19 08:18:25','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(27,'2022-11-19 08:18:37','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(28,'2022-11-19 08:18:45','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(29,'2022-11-19 08:19:10','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(30,'2022-11-19 08:19:19','login_attempt','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev'),(31,'2022-11-19 08:19:27','login_success','172.20.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:106.0) Gecko/20100101 Firefox/106.0','Логин: dev');
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,7 +397,7 @@ CREATE TABLE `module` (
 
 LOCK TABLES `module` WRITE;
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
-INSERT INTO `module` VALUES (1,'\\App\\Extensions\\Menu\\Menu','Меню','site',0),(2,'App\\Extensions\\Content\\ModuleContent','Список материалов','site',0),(3,'\\App\\Extensions\\Breadcrumbs\\Breadcrumbs','Хлебные крошки','site',1),(4,'\\App\\Extensions\\Block\\Block','Текстовый блок','site',0),(7,'Breadcrumbs','Admin. Хлебные крошки','admin',0),(8,'Menu','Admin. Меню','admin',0),(9,'App\\\\Var\\Www\\Newteam\\Extensions\\Slider\\ModuleSlider','Слайдер','site',0),(10,'App\\\\Var\\Www\\Newteam\\Extensions\\Callback\\ModuleCallback','Обратный звонок','site',0),(11,'Account','Admin. Аккаунт','admin',0),(12,'Install','Admin. Репозиторий','admin',0),(13,'App\\\\Var\\Www\\Newteam\\Extensions\\Code\\ModuleCode','Код','site',0);
+INSERT INTO `module` VALUES (1,'\\App\\Extensions\\Menu\\Menu','Меню','site',0),(2,'App\\Extensions\\Content\\ModuleContent','Список материалов','site',0),(3,'\\App\\Extensions\\Breadcrumbs\\Breadcrumbs','Хлебные крошки','site',1),(4,'\\App\\Extensions\\Block\\Block','Текстовый блок','site',0),(7,'Breadcrumbs','Admin. Хлебные крошки','admin',0),(8,'Menu','Admin. Меню','admin',0),(9,'\\App\\Extensions\\Slider\\ModuleSlider','Слайдер','site',0),(10,'\\App\\Extensions\\Callback\\ModuleCallback','Обратный звонок','site',0),(11,'Account','Admin. Аккаунт','admin',0),(12,'Install','Admin. Репозиторий','admin',0),(13,'\\App\\Extensions\\Code\\ModuleCode','Код','site',0);
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -640,7 +640,7 @@ CREATE TABLE `struct_field` (
 
 LOCK TABLES `struct_field` WRITE;
 /*!40000 ALTER TABLE `struct_field` DISABLE KEYS */;
-INSERT INTO `struct_field` VALUES (1,'Строка','FieldString'),(2,'Целое число','FieldInt'),(3,'Булевая переменная','FieldBool'),(4,'Алиас','FieldAlias'),(5,'Url-путь','FieldPath'),(6,'Пароль','FieldPassword'),(7,'Дата','FieldDate'),(8,'Дата и время','FieldDateTime'),(9,'Текст','FieldText'),(10,'Файл','FieldFile'),(11,'Изображение','FieldImage'),(14,'Варианты','FieldEnum'),(15,'№ п/п','FieldNPP'),(16,'Виртуальное поле','FieldVirtual'),(17,'Время','FieldTime'),(18,'Дробное число','FieldDouble'),(19,'Связь многие ко многим','FieldMultiKey'),(20,'Пароль видимый','FieldPasswordVisible');
+INSERT INTO `struct_field` VALUES (1,'Строка','\\Simplex\\Admin\\Fields\\FieldString'),(2,'Целое число','\\Simplex\\Admin\\Fields\\FieldInt'),(3,'Булевая переменная','\\Simplex\\Admin\\Fields\\FieldBool'),(4,'Алиас','\\Simplex\\Admin\\Fields\\FieldAlias'),(5,'Url-путь','\\Simplex\\Admin\\Fields\\FieldPath'),(6,'Пароль','\\Simplex\\Admin\\Fields\\FieldPassword'),(7,'Дата','\\Simplex\\Admin\\Fields\\FieldDate'),(8,'Дата и время','\\Simplex\\Admin\\Fields\\FieldDateTime'),(9,'Текст','\\Simplex\\Admin\\Fields\\FieldText'),(10,'Файл','\\Simplex\\Admin\\Fields\\FieldFile'),(11,'Изображение','\\Simplex\\Admin\\Fields\\FieldImage'),(14,'Варианты','\\Simplex\\Admin\\Fields\\FieldEnum'),(15,'№ п/п','\\Simplex\\Admin\\Fields\\FieldNPP'),(16,'Виртуальное поле','\\Simplex\\Admin\\Fields\\FieldVirtual'),(17,'Время','\\Simplex\\Admin\\Fields\\FieldTime'),(18,'Дробное число','\\Simplex\\Admin\\Fields\\FieldDouble'),(19,'Связь многие ко многим','\\Simplex\\Admin\\Fields\\FieldMultiKey'),(20,'Пароль видимый','\\Simplex\\Admin\\Fields\\FieldPasswordVisible');
 /*!40000 ALTER TABLE `struct_field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -801,7 +801,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,1,1,'dev','b8700830eb7bdd7a4823df4827f97c28','fb1a392b083e3121edd7c9046be62baa','22da1292a596ee685cb20faa435c3c8f','','',NULL),(2,2,1,'admin','827ccb0eea8a706c4c34a16891f84e7b','e1c3403a66d1269c4e3edbae11c11f03','',NULL,'',NULL);
+INSERT INTO `user` VALUES (1,1,1,'dev','b8700830eb7bdd7a4823df4827f97c28','fb1a392b083e3121edd7c9046be62baa','22da1292a596ee685cb20faa435c3c8f','','',NULL),(2,2,0,'admin','827ccb0eea8a706c4c34a16891f84e7b','e1c3403a66d1269c4e3edbae11c11f03','',NULL,'',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -960,4 +960,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-16 13:44:40
+-- Dump completed on 2022-11-19 14:06:13

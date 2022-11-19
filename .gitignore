@@ -1,5 +1,6 @@
 /.idea
-/uf
+/uf/*
+!/uf/.gitkeep
 vendor
 docker/data
 .env

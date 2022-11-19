@@ -116,12 +116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "0b388a437580add6a8d866ccf4907f2f16fe5aa2"
+                "reference": "529732a93fe87ab70beb4e3c1c5655965de90fe7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/0b388a437580add6a8d866ccf4907f2f16fe5aa2",
-                "reference": "0b388a437580add6a8d866ccf4907f2f16fe5aa2",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/529732a93fe87ab70beb4e3c1c5655965de90fe7",
+                "reference": "529732a93fe87ab70beb4e3c1c5655965de90fe7",
                 "shasum": ""
             },
             "require": {
@@ -134,7 +134,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Simplex\\Core\\": "src/Core"
+                    "Simplex\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -159,7 +159,7 @@
                 "issues": "https://github.com/glushkovds/simplex-core/issues",
                 "source": "https://github.com/glushkovds/simplex-core/tree/main"
             },
-            "time": "2022-10-23T15:46:25+00:00"
+            "time": "2022-11-19T10:37:39+00:00"
         },
         {
             "name": "graham-campbell/result-type",

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-admin.git",
-                "reference": "de445eba43ed28ee67abc83ff19ce9dc71889f88"
+                "reference": "205caf2b4d8aa579b0ddf2290524dc650e516a8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/de445eba43ed28ee67abc83ff19ce9dc71889f88",
-                "reference": "de445eba43ed28ee67abc83ff19ce9dc71889f88",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/205caf2b4d8aa579b0ddf2290524dc650e516a8d",
+                "reference": "205caf2b4d8aa579b0ddf2290524dc650e516a8d",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Simplex\\Admin\\": "src/Admin"
+                    "Simplex\\Admin\\": "src/Admin",
+                    "Simplex\\Admin\\Extensions\\": "src/Extensions"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -55,7 +56,7 @@
                 "issues": "https://github.com/glushkovds/simplex-admin/issues",
                 "source": "https://github.com/glushkovds/simplex-admin/tree/main"
             },
-            "time": "2022-11-19T08:57:55+00:00"
+            "time": "2022-11-19T12:17:29+00:00"
         },
         {
             "name": "glushkovds/simplex-auth",
@@ -116,12 +117,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "529732a93fe87ab70beb4e3c1c5655965de90fe7"
+                "reference": "171f8f48d8ab0bc56eb693201b1fbb8a4909e312"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/529732a93fe87ab70beb4e3c1c5655965de90fe7",
-                "reference": "529732a93fe87ab70beb4e3c1c5655965de90fe7",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/171f8f48d8ab0bc56eb693201b1fbb8a4909e312",
+                "reference": "171f8f48d8ab0bc56eb693201b1fbb8a4909e312",
                 "shasum": ""
             },
             "require": {
@@ -159,7 +160,7 @@
                 "issues": "https://github.com/glushkovds/simplex-core/issues",
                 "source": "https://github.com/glushkovds/simplex-core/tree/main"
             },
-            "time": "2022-11-19T10:37:39+00:00"
+            "time": "2022-11-19T12:19:24+00:00"
         },
         {
             "name": "graham-campbell/result-type",

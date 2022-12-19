@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-admin.git",
-                "reference": "cef28e828b67be80dad04237754f089095b67626"
+                "reference": "95e55b2033584f858e288d7c15648a93f6641856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/cef28e828b67be80dad04237754f089095b67626",
-                "reference": "cef28e828b67be80dad04237754f089095b67626",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/95e55b2033584f858e288d7c15648a93f6641856",
+                "reference": "95e55b2033584f858e288d7c15648a93f6641856",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "issues": "https://github.com/glushkovds/simplex-admin/issues",
                 "source": "https://github.com/glushkovds/simplex-admin/tree/main"
             },
-            "time": "2022-12-19T08:36:00+00:00"
+            "time": "2022-12-19T10:23:13+00:00"
         },
         {
             "name": "glushkovds/simplex-auth",
@@ -117,12 +117,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-core.git",
-                "reference": "c9b17eb93b6282c47e6eda8e10d9a30b8ddce6f3"
+                "reference": "ff537822ae6041d95fb22473bd4d6d26436ccfdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/c9b17eb93b6282c47e6eda8e10d9a30b8ddce6f3",
-                "reference": "c9b17eb93b6282c47e6eda8e10d9a30b8ddce6f3",
+                "url": "https://api.github.com/repos/glushkovds/simplex-core/zipball/ff537822ae6041d95fb22473bd4d6d26436ccfdb",
+                "reference": "ff537822ae6041d95fb22473bd4d6d26436ccfdb",
                 "shasum": ""
             },
             "require": {
@@ -160,7 +160,7 @@
                 "issues": "https://github.com/glushkovds/simplex-core/issues",
                 "source": "https://github.com/glushkovds/simplex-core/tree/main"
             },
-            "time": "2022-12-18T08:05:45+00:00"
+            "time": "2022-12-19T11:12:05+00:00"
         },
         {
             "name": "graham-campbell/result-type",

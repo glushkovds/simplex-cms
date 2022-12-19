@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/glushkovds/simplex-admin.git",
-                "reference": "a3c02044222da8507c8e4957bb52124a9b1a4408"
+                "reference": "cef28e828b67be80dad04237754f089095b67626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/a3c02044222da8507c8e4957bb52124a9b1a4408",
-                "reference": "a3c02044222da8507c8e4957bb52124a9b1a4408",
+                "url": "https://api.github.com/repos/glushkovds/simplex-admin/zipball/cef28e828b67be80dad04237754f089095b67626",
+                "reference": "cef28e828b67be80dad04237754f089095b67626",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "issues": "https://github.com/glushkovds/simplex-admin/issues",
                 "source": "https://github.com/glushkovds/simplex-admin/tree/main"
             },
-            "time": "2022-12-18T08:03:53+00:00"
+            "time": "2022-12-19T08:36:00+00:00"
         },
         {
             "name": "glushkovds/simplex-auth",

@@ -31,6 +31,7 @@ class Init
         if (SF_LOCATION != SF_LOCATION_CLI) {
             \Simplex\Core\Container::getCore()::init();
             \Simplex\Core\Container::getPage()::init();
+            \App\Layout\LayoutManager::init();
         }
 
         return \Simplex\Core\Container::getCore();

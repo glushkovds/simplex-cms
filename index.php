@@ -37,6 +37,7 @@ function imDev()
     $ret = !empty($_COOKIE['imdev']);
     $ret |= $_SERVER['REMOTE_ADDR'] == '127.0.0.1';
     $ret |= strpos($_SERVER['REMOTE_ADDR'], '192.168') === 0;
+    $ret |= explode(':', $_SERVER['HTTP_HOST'])[0] == 'localhost';
     return $ret;
 }
 

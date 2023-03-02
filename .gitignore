@@ -3,4 +3,5 @@
 !/uf/.gitkeep
 vendor
 docker/data
-.env
+cache
+.DS_Store

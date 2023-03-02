@@ -20,12 +20,13 @@ abstract class LayoutBase
             }
             Container::getPage()::addAsset($asset);
         }
-        if (is_file(static::layoutRootDir() . '/style.css')) {
-            Container::getPage()::css(static::layoutRootHref() . '/style.css');
-        }
+
         if (is_file(static::layoutRootDir() . '/script.js')) {
             Container::getPage()::js(static::layoutRootHref() . '/script.js');
         }
+
+        LayoutManager::useStyle(static::layoutRootDir() . '/style.css');
+        LayoutManager::useStyle(static::layoutRootDir() . '/style.scss');
     }
 
     public static function draw(array $data = [])

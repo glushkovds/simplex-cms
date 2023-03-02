@@ -218,7 +218,7 @@ CREATE TABLE `content_template` (
   `template_name` varchar(255) NOT NULL,
   `template_path` varchar(255) NOT NULL COMMENT 'relative path from Extensions/Content/tpl. for example "/mainPage.tpl" or "/news/item.tpl"',
   PRIMARY KEY (`template_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,7 +257,7 @@ CREATE TABLE `content_template_param` (
   CONSTRAINT `FK_content_template_param_content_template_param_mp_id` FOREIGN KEY (`param_pid`) REFERENCES `content_template_param` (`ctp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_content_template_param_struct_field_field_id` FOREIGN KEY (`field_id`) REFERENCES `struct_field` (`field_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_content_template_param_template_template_id` FOREIGN KEY (`template_id`) REFERENCES `content_template` (`template_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -893,7 +893,7 @@ CREATE TABLE `user_auth` (
   KEY `user_auth_time_last_login_index` (`time_last_login`),
   KEY `user_auth_token_time_expires_index` (`token`,`time_expires`),
   CONSTRAINT `user_auth_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -948,7 +948,7 @@ CREATE TABLE `user_priv_personal` (
   KEY `FK_user_role_priv_user_role_role_id2` (`user_id`),
   CONSTRAINT `FK_user_role_priv_user_priv_priv_id2` FOREIGN KEY (`priv_id`) REFERENCES `user_priv` (`priv_id`),
   CONSTRAINT `FK_user_role_priv_user_role_role_id2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

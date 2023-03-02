@@ -12,6 +12,7 @@ class Config extends \Simplex\Core\Config
     public static $theme = 'default';
 
     public static $subdomainOneSession = false;
+    public static $devMode = false;
 
     /**
      * @see /core/sflog.class.php
@@ -27,10 +28,11 @@ class Config extends \Simplex\Core\Config
 
     public static function load()
     {
-        static::$db_host = env('DB_HOST', 'db');
+        static::$db_host = env('DB_HOST', '127.0.0.1');
         static::$db_user = env('DB_USER', 'simplex');
         static::$db_pass = env('DB_PASS', 'simplex');
         static::$db_name = env('DB_NAME', 'simplex');
+        static::$devMode = env("DEVELOPER", false);
     }
 
     public static $routesFile = SF_ROOT_PATH . '/routes.php';

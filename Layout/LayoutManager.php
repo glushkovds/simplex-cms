@@ -26,15 +26,9 @@ class LayoutManager
 
     public static function init()
     {
-        Container::getPage()::css('/Layout/assetsGlobal/style.css');
         Container::getPage()::js('/Layout/assetsGlobal/script.js');
         foreach (static::$usedLayouts as $class) {
             $class::initAssets();
-        }
-
-        // abort if no styles were used.
-        if (!static::$usedStyles) {
-            return;
         }
 
         // compose cache path.
@@ -49,12 +43,25 @@ class LayoutManager
             $cachePath = '/cache/css/style.css';
         }
 
+        $imports = [SF_ROOT_PATH . '/Layout/assetsGlobal'];
+
         // check if cache file exists.
+        $compiler = new Compiler();
         if (\Config::$devMode || !is_file(SF_ROOT_PATH . $cachePath)) {
+            // force add root style implicitly.
+            $implicitPath = SF_ROOT_PATH . '/Layout/assetsGlobal/style.scss'; $implicit = '';
+            if (is_file($implicitPath)) {
+                $implicit = file_get_contents($implicitPath);
+            }
+
             // cache styles.
             $styleString = '';
 
-            $compiler = new Compiler();
+            $compileString = '';
+            if ($implicit) {
+                $compileString .= $implicit;
+            }
+
             foreach (static::$usedStyles as $style) {
                 if (!is_file($style)) {
                     continue;
@@ -62,13 +69,17 @@ class LayoutManager
 
                 $cssData = file_get_contents($style);
                 if (str_ends_with($style, '.scss')) {
-                    // compile scss.
-                    $compiler->setImportPaths(dirname($style));
-                    $cssData = $compiler->compileString($cssData)->getCss();
+                    $imports[] = dirname($style);
+                    $compileString .= $cssData;
+                } else {
+                    $styleString .= $cssData;
                 }
-
-                $styleString .= $cssData;
             }
+
+            // compile what should be compiled
+            $compiler->setImportPaths($imports);
+            $compileString = $compiler->compileString($compileString)->getCss();
+            $styleString = $compileString . $styleString;
 
             // minify resulting css.
             if (!\Config::$devMode) {

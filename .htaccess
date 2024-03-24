@@ -3,6 +3,9 @@ AddDefaultCharset UTF-8
 <IfModule mod_rewrite.c>
   RewriteEngine on
 
+  RewriteRule ^tests/ - [R=404,L]
+  RewriteRule ^(codeception.yml|composer.json|composer.lock|docker-compose.yml|docker-compose.test.yml|LICENSE|README.md|sf|simplex.sql|Testing.md)$ - [R=404,L]
+
   RewriteCond %{HTTP_HOST} ^api\.(.*) [NC]
   RewriteRule .*    api.php [L]
 

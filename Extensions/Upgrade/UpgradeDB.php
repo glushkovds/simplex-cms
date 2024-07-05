@@ -98,7 +98,10 @@ class UpgradeDB
                 $db->query($q);
             }
             $q = "alter table seo add metatags text null";
-            @$db->query($q);
+            try {
+                @$db->query($q);
+            }catch (\Throwable $e){
+            }
             return true;
         });
     }
